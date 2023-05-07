@@ -14,6 +14,17 @@
     <br>
     <h2>History</h2>
     <textarea readonly rows="10" cols="50">{{ history|join('\n') }}</textarea>
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<div class="container">
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endwith %}
 {% endblock %}
 
 <!--<form method="POST" action="{{ url_for('submit_data') }}">-->

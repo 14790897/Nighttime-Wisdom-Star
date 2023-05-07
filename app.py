@@ -19,9 +19,9 @@ from process import AskChatGPT
 # 创建一个AskChatGPT对象
 ask_chatgpt = AskChatGPT()
 # 生成一个256位的随机密钥
-secret_key = secrets.token_hex(32)
-print(secret_key)
-
+# secret_key = secrets.token_hex(32)
+# print(secret_key)
+secret_key = os.environ.get('SECRET_KEY')
 app = Flask(__name__, template_folder=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates'))
 app.config['SECRET_KEY'] = secret_key
 
@@ -93,6 +93,8 @@ def home():
         username = session['username']
         result_key = f"{username}:results"
         history = r.lrange(result_key, 0, -1)
+    else:
+        flash('Please log in to submit data.', 'warning')
     return render_template('home.html', form=form, history=history)
 
 
