@@ -27,10 +27,10 @@ app.config['SECRET_KEY'] = secret_key
 
 # 获取 Redis 连接字符串并创建连接
 redis_url = os.environ.get('REDIS_URL')
-# r = redis.from_url(redis_url)
+r = redis.from_url(redis_url)
 
 # 创建Redis连接
-r = redis.StrictRedis(host='localhost', port=6379, db=0, decode_responses=True)
+# r = redis.StrictRedis(host='localhost', port=6379, db=0, decode_responses=True)
 
 # 存储用户名和密码
 # users = {}
