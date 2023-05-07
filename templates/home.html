@@ -16,13 +16,13 @@
     <textarea readonly rows="10" cols="50">{{ history|join('\n') }}</textarea>
 {% with messages = get_flashed_messages(with_categories=true) %}
 {% if messages %}
-<div class="container">
-    {% for category, message in messages %}
-    <div class="alert alert-{{ category }}">
-        {{ message }}
-    </div>
-    {% endfor %}
-</div>
+<!--<div class="container">-->
+<!--    {% for category, message in messages %}-->
+<!--    <div class="alert alert-{{ category }}">-->
+<!--        {{ message }}-->
+<!--    </div>-->
+<!--    {% endfor %}-->
+<!--</div>-->
 {% endif %}
 {% endwith %}
 {% endblock %}
