@@ -20,7 +20,6 @@ from process import AskChatGPT
 ask_chatgpt = AskChatGPT()
 # 生成一个256位的随机密钥
 # secret_key = secrets.token_hex(32)
-# print(secret_key)
 secret_key = os.environ.get('SECRET_KEY')
 app = Flask(__name__, template_folder=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates'))
 app.config['SECRET_KEY'] = secret_key
