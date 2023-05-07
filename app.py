@@ -13,7 +13,6 @@ import os
 import secrets
 from flask import session
 from flask import request
-from pydantic import BaseModel
 import os
 from process import AskChatGPT
 
