@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Home</h2>
+    {% if 'username' in session %}
+        <h3>欢迎用户：{{ session['username'] }}</h3>
+    {% endif %}
+    <form method="POST" action="{{ url_for('') }}">
+        {{ form.csrf_token }}
+        {{ form.input_data.label }}<br>
+        {{ form.input_data(size=40) }}<br>
+        {{ form.submit(class="btn btn-primary") }}
+    </form>
+    <br>
+    <h2>History</h2>
+    <textarea readonly rows="10" cols="50">{{ history|join('\n') }}</textarea>
+{% endblock %}
+
+<!--<form method="POST" action="{{ url_for('submit_data') }}">-->
+<!--        <label for="input_data">Input Data:</label><br>-->
+<!--        <input type="text" id="input_data" name="input_data" required><br>-->
+<!--        <input type="submit" value="Submit">-->
+<!--    </form>-->
