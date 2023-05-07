@@ -142,4 +142,6 @@ thread.start()
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    if os.environ.get("ENV") == "development":
+        app.run(debug=True)
+
