@@ -19,21 +19,18 @@ from process import AskChatGPT
 # 创建一个AskChatGPT对象
 ask_chatgpt = AskChatGPT()
 # 生成一个256位的随机密钥
-# secret_key = secrets.token_hex(32)
+secret_key = secrets.token_hex(32)
 # print(secret_key)
-secret_key = os.environ.get('SECRET_KEY')
+# secret_key = os.environ.get('SECRET_KEY')
 app = Flask(__name__, template_folder=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates'))
 app.config['SECRET_KEY'] = secret_key
 
 # 获取 Redis 连接字符串并创建连接
-redis_url = os.environ.get('REDIS_URL')
-r = redis.from_url(redis_url)
+# redis_url = os.environ.get('REDIS_URL')
+# r = redis.from_url(redis_url)
 
 # 创建Redis连接
-# r = redis.StrictRedis(host='localhost', port=6379, db=0, decode_responses=True)
-
-# 存储用户名和密码
-# users = {}
+r = redis.StrictRedis(host='localhost', port=6379, db=0, decode_responses=True)
 
 # 登录表单
 class LoginForm(FlaskForm):
