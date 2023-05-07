@@ -5,7 +5,7 @@
     {% if 'username' in session %}
         <h3>欢迎用户：{{ session['username'] }}</h3>
     {% endif %}
-    <form method="POST" action="{{ url_for('') }}">
+    <form method="POST" action="{{ url_for('home') }}">
         {{ form.csrf_token }}
         {{ form.input_data.label }}<br>
         {{ form.input_data(size=40) }}<br>
