@@ -1,4 +1,4 @@
-.vercel
+.vercel/
 .env
-_pycache_
-.idea
+__pycache__/
+.idea/
