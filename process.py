@@ -6,9 +6,10 @@ from typing import Any, List, Mapping, Optional
 
 class AskChatGPT:
 
-    def __init__(self):
+    def __init__(self, url):
         self.session = None
         self.parent_message_id = None
+        self.url = url
 
     def process_data(
             self,
@@ -38,7 +39,7 @@ class AskChatGPT:
             "stream": False,
             "conversation_id": conversation_id,
         }
-        response = requests.post(f"https://cloud.liuweiqing.top/api/conversation/talk", json=data)
+        response = requests.post(f"{self.url}/api/conversation/talk", json=data)
         response_data = response.text
         response_data = json.loads(response_data)
         parts = response_data['message']['content']['parts']
@@ -55,3 +56,10 @@ class AskChatGPT:
         # 更新 parent_message_id
         self.parent_message_id = response_data["message"]['id']
         return response_message
+
+if __name__ == '__main__':
+    ask_chatgpt = AskChatGPT()
+    while True:
+        input_data = input("请输入：")
+        print(ask_chatgpt.process_data(input_data))
+        time.sleep(1)
