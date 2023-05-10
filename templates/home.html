@@ -3,40 +3,18 @@
 {% block content %}
     <h2>Home</h2>
     {% if 'username' in session %}
-        <h3>欢迎用户：{{ session['username'] }}</h3>
+        <h3 class="mt-3">欢迎用户：{{ session['username'] }}</h3>
     {% endif %}
-    <form method="POST" action="{{ url_for('home') }}">
+    <form method="POST" action="{{ url_for('home') }}" class="mt-3">
         {{ form.csrf_token }}
-        {{ form.input_data.label }}<br>
-        {{ form.input_data(size=40) }}<br>
+        <div class="form-group">
+            {{ form.input_data.label(class="form-control-label") }}
+            {{ form.input_data(class="form-control", size=40) }}
+        </div>
         {{ form.submit(class="btn btn-primary") }}
     </form>
     <br>
     <h2>History</h2>
-    <textarea readonly rows="10" cols="50">{{ history|join('\n') }}</textarea>
+    <textarea readonly rows="10" class="form-control">{{ history|join('\n') }}</textarea>
 {% endblock %}
 
-<!--    </form>-->
- <!-- 引入 Bootstrap CSS -->
-<!--    <link-->
-<!--        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"-->
-<!--        rel="stylesheet"-->
-<!--        integrity="sha384-pzjw8f+ua7Kw1TIq0v8FqFjcJ6pajs/rfdfs3SO+kD4Ck5BdPtF+to8xM6BY46Ip"-->
-<!--        crossorigin="anonymous"-->
-<!--    />-->
-    <!-- 可选：引入 Bootstrap JavaScript 和依赖项 jQuery 和 Popper.js -->
-<!--    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSGFpoO9XFL1KHODez7+MmB4y+Gp4JF4IjBI4y4JxBG4ImX8wFn" crossorigin="anonymous"></script>-->
-<!--    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.4/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoJtKh7z7lGz7fuP4F8nfdFvAOA6Gg/z6Y5J6XqqyGXYM2ntX1" crossorigin="anonymous"></script>-->
-<!--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-M7XA0bDp_zHN1Dz_ORpWotrAF64N1g4WOgJRYW_i0q3v7PA1mhoK_ubOyU3J6M7" crossorigin="anonymous"></script>-->
-
-<!--{% with messages = get_flashed_messages(with_categories=true) %}-->
-<!--{% if messages %}-->
-<!--<div class="container">-->
-<!--    {% for category, message in messages %}-->
-<!--    <div class="alert alert-{{ category }}">-->
-<!--        {{ message }}-->
-<!--    </div>-->
-<!--    {% endfor %}-->
-<!--</div>-->
-<!--{% endif %}-->
-<!--{% endwith %}-->

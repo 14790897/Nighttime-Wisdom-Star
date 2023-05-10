@@ -3,3 +3,4 @@
 __pycache__/
 .idea/
 vercel.json
+env_load_test.py

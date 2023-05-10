@@ -1,8 +1,12 @@
+import os
 import uuid
 import requests
 import json
 import time
 from typing import Any, List, Mapping, Optional
+
+from dotenv import load_dotenv
+
 
 class AskChatGPT:
 
@@ -58,7 +62,9 @@ class AskChatGPT:
         return response_message
 
 if __name__ == '__main__':
-    ask_chatgpt = AskChatGPT()
+    load_dotenv()  # 加载 .env 文件
+    url = os.environ.get('URL')
+    ask_chatgpt = AskChatGPT(url)
     while True:
         input_data = input("请输入：")
         print(ask_chatgpt.process_data(input_data))
