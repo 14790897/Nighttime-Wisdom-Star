@@ -31,7 +31,7 @@ ask_chatgpt = AskChatGPT(url)
 # print("secret_key",secret_key)
 app = Flask(__name__, template_folder=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates'))
 app.config['SECRET_KEY'] = secret_key
-# app.secret_key = os.environ.get('SECRET_KEY')
+app.secret_key = os.environ.get('SECRET_KEY')#linux必须用这行代码5.11
 
 handler = logging.FileHandler('flask.log')  # errors are logged to this file
 handler.setLevel(logging.ERROR)  # only log errors and above
