@@ -1,24 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>Register</h2>
-    <form action="" method="post">
+    <h2 class="mb-3">注册</h2>
+    <form action="" method="post" class="needs-validation" novalidate>
         {{ form.hidden_tag() }}
-        <div>
-            {{ form.username.label }}<br>
-            {{ form.username(size=20) }}
+        <div class="form-group">
+            {{ form.username.label(class="form-control-label") }}
+            {{ form.username(class="form-control", placeholder="Username") }}
         </div>
-        <div>
-            {{ form.password.label }}<br>
-            {{ form.password(size=20) }}
+        <div class="form-group">
+            {{ form.password.label(class="form-control-label") }}
+            {{ form.password(class="form-control", placeholder="Password") }}
         </div>
-        <div>
-            {{ form.confirm_password.label }}<br>
-            {{ form.confirm_password(size=20) }}
+        <div class="form-group">
+            {{ form.confirm_password.label(class="form-control-label") }}
+            {{ form.confirm_password(class="form-control", placeholder="Confirm Password") }}
         </div>
-        <div>
-            {{ form.submit() }}
+        <div class="form-group">
+            {{ form.submit(class="btn btn-primary") }}
         </div>
     </form>
 {% endblock %}
-
