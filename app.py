@@ -14,7 +14,9 @@ import os
 from process import AskChatGPT
 from dotenv import load_dotenv
 import logging
-
+import sys
+sys.path.insert(0, '.')
+from celery_config import app as celery_app
 
 
 try:
@@ -42,11 +44,21 @@ app.logger.addHandler(handler)  # attach the handler to the app's logger
 # r = redis.from_url(redis_url)
 
 # 创建Redis连接
+host = os.environ.get('REDIS_HOST')
+password = os.environ.get('REDIS_PASSWORD')
+
 try:
-    r = redis.StrictRedis(host='localhost', port=6379, db=0, decode_responses=True)
+    r = redis.StrictRedis(
+        host='your-redis-host',
+        port=6379,
+        password=password,  # 使用环境变量中的密码
+        db=0,
+        decode_responses=True
+    )
 except Exception as e:
     print(f"Error while connecting to Redis: {e}")
     exit(1)
+
 
 # 登录表单
 class LoginForm(FlaskForm):
@@ -102,6 +114,8 @@ def home():
             # 将数据添加到Redis中的对应项
             r.lpush(data_key, input_data)
             flash('Data submitted successfully.', 'success')
+            form = DataForm()  # 重新初始化表单，清空字段
+            return redirect(url_for('home'))  # 重定向到新的页面
     if 'username' in session:
         username = session['username']
         result_key = f"{username}:results"
@@ -111,11 +125,8 @@ def home():
     return render_template('home.html', form=form, history=history)
 
 
-# def process_data_job():
-#     while True:
-#         schedule.run_pending()
-#         time.sleep(1)
-
+#app.py
+@celery_app.task
 def process_data_schedule():
     if not 0 <= datetime.now(pytz.timezone('Asia/Shanghai')).hour < 8:
         return
@@ -141,9 +152,9 @@ def process_data_schedule():
                 processed_count = int(r.get(counter_key) or 0)
 
                 if input_data:
-                    if processed_count < 5:
+                    if processed_count < 10:
                         try:
-                            # try:
+                            # try:  
                             print(f"Input data: {input_data}")
                             result = ask_chatgpt.process_data(input_data)
                             # result = "我爱你"
@@ -181,15 +192,12 @@ def process_data_schedule():
                 time.sleep(180*60 - time_count)
                 time_count = 0
 
-# schedule.every().day.at("00:00").do(process_data_schedule)
 
-# 创建一个后台线程，运行定时任务
-# thread = Thread(target=process_data_job)
-thread = Thread(target=process_data_schedule)
-thread.start()
+# thread = Thread(target=process_data_schedule)
+# thread.start()
 
 
 if __name__ == '__main__':
     # if os.environ.get("ENV") == "development":
     app.run(host='127.0.0.1', port=5000, debug=True)
-
+    process_data_schedule.delay()

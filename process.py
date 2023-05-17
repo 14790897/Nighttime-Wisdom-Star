@@ -7,7 +7,8 @@ from typing import Any, List, Mapping, Optional
 
 from dotenv import load_dotenv
 
-
+#不能删除此程序新建的对话，因为会话id在此程序运行过程中会一直保留，
+# 如果删除了，会话id就无法找到（新会话conversation_id应为none），造成错误
 class AskChatGPT:
 
     def __init__(self, url):

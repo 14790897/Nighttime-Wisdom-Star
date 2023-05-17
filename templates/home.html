@@ -9,7 +9,7 @@
         {{ form.csrf_token }}
         <div class="form-group">
             {{ form.input_data.label(class="form-control-label") }}
-            {{ form.input_data(class="form-control", size=40) }}
+            {{ form.input_data(class="form-control", size=40, autocomplete="off") }}
         </div>
         {{ form.submit(class="btn btn-primary") }}
     </form>
