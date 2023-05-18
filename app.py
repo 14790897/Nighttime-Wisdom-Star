@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta, time as dt_time
+from multiprocessing import Process
 from pytz import timezone
 import pytz
 import time
@@ -49,7 +50,7 @@ password = os.environ.get('REDIS_PASSWORD')
 
 try:
     r = redis.StrictRedis(
-        host='your-redis-host',
+        host='host',
         port=6379,
         password=password,  # 使用环境变量中的密码
         db=0,
@@ -126,7 +127,7 @@ def home():
 
 
 #app.py
-@celery_app.task
+# @celery_app.task
 def process_data_schedule():
     if not 0 <= datetime.now(pytz.timezone('Asia/Shanghai')).hour < 8:
         return
@@ -192,6 +193,10 @@ def process_data_schedule():
                 time.sleep(180*60 - time_count)
                 time_count = 0
 
+def process_loop():
+    while True:
+        process_data_schedule()
+
 
 # thread = Thread(target=process_data_schedule)
 # thread.start()
@@ -200,4 +205,7 @@ def process_data_schedule():
 if __name__ == '__main__':
     # if os.environ.get("ENV") == "development":
     app.run(host='127.0.0.1', port=5000, debug=True)
-    process_data_schedule.delay()
+    # process_data_schedule.delay()
+    p = Process(target=process_loop)
+    p.start()
+    p.join()

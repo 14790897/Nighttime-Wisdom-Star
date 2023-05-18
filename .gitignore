@@ -4,3 +4,8 @@ __pycache__/
 .idea/
 vercel.json
 env_load_test.py
+app/
+app_linux.py
+thread_in_back.py
+celery_config.py
+initial.py
