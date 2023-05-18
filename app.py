@@ -45,14 +45,13 @@ app.logger.addHandler(handler)  # attach the handler to the app's logger
 # r = redis.from_url(redis_url)
 
 # 创建Redis连接
-host = os.environ.get('REDIS_HOST')
-password = os.environ.get('REDIS_PASSWORD')
+# host = os.environ.get('REDIS_HOST')
+# password = os.environ.get('REDIS_PASSWORD')
 
 try:
     r = redis.StrictRedis(
-        host='host',
+        host='localhost',
         port=6379,
-        password=password,  # 使用环境变量中的密码
         db=0,
         decode_responses=True
     )
