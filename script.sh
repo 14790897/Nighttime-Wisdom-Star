@@ -3,26 +3,30 @@
 echo "Nighttime-Wisdom-Star"
 
 # 更新软件包列表
-sudo apt-get update
+apt-get update
+apt-get install -y python3 python3-pip
+apt-get install -y vim
+apt-get install -y git
 
 # 安装Redis
-sudo apt-get install -y redis-server
+apt-get install -y redis-server
 
 # 备份Redis的默认配置文件（如果存在）
 if [ -f /etc/redis/redis.conf ]; then
-    sudo cp /etc/redis/redis.conf /etc/redis/redis.conf.bak
+    cp /etc/redis/redis.conf /etc/redis/redis.conf.bak
 fi
 
 # 写入新的配置
-echo "save 900 1" | sudo tee -a /etc/redis/redis.conf
-echo "save 300 10" | sudo tee -a /etc/redis/redis.conf
-echo "save 60 10000" | sudo tee -a /etc/redis/redis.conf
-echo "stop-writes-on-bgsave-error no" | sudo tee -a /etc/redis/redis.conf
+echo "save 900 1" |  tee -a /etc/redis/redis.conf
+echo "save 300 10" |  tee -a /etc/redis/redis.conf
+echo "save 60 10000" |  tee -a /etc/redis/redis.conf
+echo "stop-writes-on-bgsave-error no" |  tee -a /etc/redis/redis.conf
 
 # 重启Redis服务以应用新的配置
-sudo systemctl restart redis.service
+ systemctl restart redis.service
 
 # make a directory
+mkdir /home
 mkdir /home/ubuntu
 mkdir /home/ubuntu/app
 
@@ -45,13 +49,13 @@ Restart=always
 
 [Install]
 WantedBy=multi-user.target
-" | sudo tee /etc/systemd/system/myapp.service
+" |  tee /etc/systemd/system/myapp.service
 
 # 启动服务
-sudo systemctl start myapp
+systemctl start myapp
 
 # 开启开机自启动
-sudo systemctl enable myapp
+systemctl enable myapp
 
 #download pandora
 pip install pandora-cloud
@@ -68,13 +72,13 @@ WorkingDirectory=/home/ubuntu
 
 [Install]
 WantedBy=multi-user.target
-" | sudo tee /etc/systemd/system/pandora.service
+" |  tee /etc/systemd/system/pandora.service
 
 # 启动服务
-sudo systemctl start pandora
+systemctl start pandora
 
 # 开启开机自启动
-sudo systemctl enable pandora
+systemctl enable pandora
 
 # modify the .env file
 # Check if .env file exists
