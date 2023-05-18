@@ -17,7 +17,7 @@ from dotenv import load_dotenv
 import logging
 import sys
 sys.path.insert(0, '.')
-from celery_config import app as celery_app
+# from celery_config import app as celery_app
 
 
 try:
