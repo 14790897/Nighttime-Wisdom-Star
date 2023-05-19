@@ -196,14 +196,14 @@ def process_loop():
     while True:
         process_data_schedule()
 
-
+p = Process(target=process_loop)
 # thread = Thread(target=process_data_schedule)
 # thread.start()
 
 
 if __name__ == '__main__':
     # if os.environ.get("ENV") == "development":
-    app.run(host='127.0.0.1', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
     # process_data_schedule.delay()
     p = Process(target=process_loop)
     p.start()
