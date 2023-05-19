@@ -192,11 +192,23 @@ def process_data_schedule():
                 time.sleep(180*60 - time_count)
                 time_count = 0
 
-def process_loop():
-    while True:
-        process_data_schedule()
+# def process_loop():
+#     while True:
+#         process_data_schedule()
 
-p = Process(target=process_loop)
+def job():
+    p = Process(target=process_data_schedule)
+    p.start()
+    p.join()
+
+# 这将在每天的0:00时执行job函数
+schedule.every().day.at("00:00").do(job)
+
+while True:
+    # 运行所有可以运行的任务
+    schedule.run_pending()
+    time.sleep(5)
+    
 # thread = Thread(target=process_data_schedule)
 # thread.start()
 
@@ -205,6 +217,6 @@ if __name__ == '__main__':
     # if os.environ.get("ENV") == "development":
     app.run(host='0.0.0.0', port=5000, debug=True)
     # process_data_schedule.delay()
-    p = Process(target=process_loop)
-    p.start()
-    p.join()
+    # p = Process(target=process_loop)
+    # p.start()
+    # p.join()
