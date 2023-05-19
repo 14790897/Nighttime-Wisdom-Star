@@ -31,8 +31,8 @@ RUN pip install -r requirements.txt
 
 # Set up the environment variables
 RUN mv .env.template .env
-RUN sed -i "s#URL=[^n]*#URL='127.0.0.1:8008'#g" .env
-RUN sed -i "s#SECRET_KEY=[^n]*#SECRET_KEY='477d75c5af744b76607fe86xcf8a5a368519acb486d62c5fa69bd42c16809f88'#g" .env
+# RUN sed -i "s#URL=[^n]*#URL='127.0.0.1:8008'#g" .env
+# RUN sed -i "s#SECRET_KEY=[^n]*#SECRET_KEY='477d75c5af744b76607fe86xcf8a5a368519acb486d62c5fa69bd42c16809f88'#g" .env
 
 # Expose necessary ports
 EXPOSE 5000
