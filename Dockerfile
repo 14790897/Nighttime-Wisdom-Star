@@ -23,8 +23,6 @@ RUN git clone https://github.com/14790897/Nighttime-Wisdom-Star.git .
 run touch t.json
 #ARG VARNAME
 RUN #echo $VARNAME > t.json
-# Install Pandora
-RUN #pip install pandora-cloud
 
 # Install Python dependencies
 RUN pip install -r requirements.txt
