@@ -19,7 +19,7 @@ import logging
 import sys
 sys.path.insert(0, '.')
 # from celery_config import app as celery_app
-
+logging.basicConfig(level=logging.INFO)
 instant_reply = False
 
 
@@ -131,6 +131,8 @@ def home():
 #app.py
 # @celery_app.task
 def process_data_schedule(instant_reply):
+    logging.info(f"process_data_schedule 函数被调用，instant_reply = {instant_reply}")
+    logging.info("退出 process_data_schedule 函数")
     if not instant_reply and not 0 <= datetime.now(pytz.timezone('Asia/Shanghai')).hour < 8:
         return
     
@@ -195,7 +197,7 @@ def process_data_schedule(instant_reply):
             if time_count < 180*60:
                 time.sleep(180*60 - time_count)
                 time_count = 0
-
+    logging.info("退出 process_data_schedule 函数")
 def process_loop(instant_reply):
     while True:
         process_data_schedule(instant_reply)

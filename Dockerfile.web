@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
 # Create application directory
 WORKDIR /home/ubuntu/app
 
+ARG CACHEBUST=1
 # Clone your application
 RUN git clone https://github.com/14790897/Nighttime-Wisdom-Star.git .
 
