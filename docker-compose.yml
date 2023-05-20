@@ -7,10 +7,10 @@ services:
     image: 14790897/nighttime-wisdom-star-2:latest
     pull_policy: if_not_present
     ports:
-      - "5000:5000"
+      - "5001:5000"
     depends_on:
       - redis
-      - worker
+      - pandora
 
   pandora:
     build:

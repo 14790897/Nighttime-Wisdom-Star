@@ -11,7 +11,8 @@ RUN pip install pandora-chatgpt
 COPY t.json /app
 
 # Create a script to run Pandora
-RUN echo "pandora -t /app/t.json -s 127.0.0.1:8008" > /app/start_pandora.sh
+RUN echo "#!/bin/bash" > /app/start_pandora.sh
+RUN echo "pandora -t /app/t.json -s 127.0.0.1:8008" >> /app/start_pandora.sh
 RUN chmod +x /app/start_pandora.sh
 
 # Expose the port for Pandora
