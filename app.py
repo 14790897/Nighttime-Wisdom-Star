@@ -19,7 +19,10 @@ import logging
 import sys
 sys.path.insert(0, '.')
 # from celery_config import app as celery_app
-logging.basicConfig(level=logging.INFO)
+import logging
+
+logging.basicConfig(format='%(asctime)s %(message)s', level=logging.INFO)
+
 instant_reply = False
 
 
@@ -53,7 +56,7 @@ app.logger.addHandler(handler)  # attach the handler to the app's logger
 
 try:
     r = redis.StrictRedis(
-        host='redis',
+        host='localhost',#'redis'
         port=6379,
         db=0,
         decode_responses=True
@@ -132,7 +135,7 @@ def home():
 # @celery_app.task
 def process_data_schedule(instant_reply):
     logging.info(f"process_data_schedule 函数被调用，instant_reply = {instant_reply}")
-    logging.info("退出 process_data_schedule 函数")
+    # logging.info("进入 process_data_schedule 函数")
     if not instant_reply and not 0 <= datetime.now(pytz.timezone('Asia/Shanghai')).hour < 8:
         return
     
@@ -197,26 +200,15 @@ def process_data_schedule(instant_reply):
             if time_count < 180*60:
                 time.sleep(180*60 - time_count)
                 time_count = 0
+        else:
+            time.sleep(5)
+        logging.info(msg=f"第{i+1}次循环结束")
+        print(os.getpid())
     logging.info("退出 process_data_schedule 函数")
+    
 def process_loop(instant_reply):
     while True:
         process_data_schedule(instant_reply)
-
-# p = Process(target=process_loop)
-# p.start()
-
-# def job():
-#     p = Process(target=process_data_schedule)
-#     p.start()
-#     p.join()
-
-# 这将在每天的0:00时执行job函数
-# schedule.every().day.at("00:00").do(job)
-
-# while True:
-#     # 运行所有可以运行的任务
-#     schedule.run_pending()
-#     time.sleep(1)
     
 # thread = Thread(target=process_data_schedule)
 # thread.start()
@@ -226,5 +218,6 @@ if __name__ == '__main__':
     instant_reply = os.environ.get("ENV") == "development"
     p = Process(target=process_loop, args=(instant_reply,))
     p.start()
-    app.run(host='0.0.0.0', port=5000, debug=True)    # process_data_schedule.delay()
+    # app.run(host='0.0.0.0', port=5000, debug=True)    # process_data_schedule.delay()
+    app.run(host='0.0.0.0', port=5000, debug=False)
     # p.join()
