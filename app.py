@@ -56,7 +56,7 @@ app.logger.addHandler(handler)  # attach the handler to the app's logger
 
 try:
     r = redis.StrictRedis(
-        host='localhost',#'redis'
+        host='redis',#'redis','localhost'
         port=6379,
         db=0,
         decode_responses=True
