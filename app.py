@@ -20,6 +20,8 @@ import sys
 sys.path.insert(0, '.')
 # from celery_config import app as celery_app
 
+instant_reply = False
+
 
 try:
     load_dotenv()  # 加载 .env 文件
@@ -128,18 +130,19 @@ def home():
 
 #app.py
 # @celery_app.task
-def process_data_schedule():
-    if not 0 <= datetime.now(pytz.timezone('Asia/Shanghai')).hour < 8:
+def process_data_schedule(instant_reply):
+    if not instant_reply and not 0 <= datetime.now(pytz.timezone('Asia/Shanghai')).hour < 8:
         return
     
     time_count = 0
 
     for i in range(60):  # 每三小时执行20次，共60条左右的用户信息
-        sleep_time = random.uniform(2 * 60, 180 * 60 / 20)
-        # sleep_time = 2
-        print(f"sleep_time: {sleep_time}")
-        time.sleep(sleep_time)  # 随机间隔，不小于5分钟
-        time_count += sleep_time
+        if not instant_reply:
+            sleep_time = random.uniform(2 * 60, 180 * 60 / 20)
+            # sleep_time = 2
+            print(f"sleep_time: {sleep_time}")
+            time.sleep(sleep_time)  # 随机间隔，不小于5分钟
+            time_count += sleep_time
         with app.app_context():
             data_keys = r.keys(pattern="*:data")
             for data_key in data_keys:
@@ -188,17 +191,17 @@ def process_data_schedule():
                     else:
                         error_entry = f"输入已达上限（5个），无法继续处理。如需帮助，请联系管理员。"
                         r.lpush(result_key, error_entry)
-        if (i+1) % 20 == 0:
+        if not instant_reply and (i+1) % 20 == 0:
             if time_count < 180*60:
                 time.sleep(180*60 - time_count)
                 time_count = 0
 
-def process_loop():
+def process_loop(instant_reply):
     while True:
-        process_data_schedule()
+        process_data_schedule(instant_reply)
 
-p = Process(target=process_loop)
-p.start()
+# p = Process(target=process_loop)
+# p.start()
 
 # def job():
 #     p = Process(target=process_data_schedule)
@@ -218,7 +221,8 @@ p.start()
 
 
 if __name__ == '__main__':
-    # if os.environ.get("ENV") == "development":
-    app.run(host='0.0.0.0', port=5000, debug=True)
-    # process_data_schedule.delay()
+    instant_reply = os.environ.get("ENV") == "development"
+    p = Process(target=process_loop, args=(instant_reply,))
+    p.start()
+    app.run(host='0.0.0.0', port=5000, debug=True)    # process_data_schedule.delay()
     # p.join()
