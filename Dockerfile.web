@@ -5,13 +5,7 @@ RUN apt-get update && apt-get install -y \
     python3 \
     python3-pip \
     vim \
-    git \
-    redis-server
-
-# Configure Redis
-RUN if [ -f /etc/redis/redis.conf ]; then mv /etc/redis/redis.conf /etc/redis/redis.conf.bak; fi
-RUN echo -e "save 900 1\nsave 300 10\nsave 60 10000\nstop-writes-on-bgsave-error no" > /etc/redis/redis.conf
-
+    git 
 
 # Create application directory
 WORKDIR /home/ubuntu/app
