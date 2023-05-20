@@ -58,7 +58,7 @@ systemctl start myapp
 systemctl enable myapp
 
 #download pandora
-pip install pandora-cloud
+pip install pandora-chatgpt
 
 # 创建和写入 pandora.service 文件
 echo "[Unit]
