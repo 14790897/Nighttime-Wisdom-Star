@@ -21,7 +21,30 @@ sys.path.insert(0, '.')
 # from celery_config import app as celery_app
 import logging
 
-logging.basicConfig(format='%(asctime)s %(message)s', level=logging.INFO)
+# logging.basicConfig(format='%(asctime)s %(message)s', level=logging.INFO)
+
+# 创建一个logger
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)  # 设置日志级别
+# 创建一个handler，用于写入日志文件
+fh = logging.FileHandler('output.log')
+fh.setLevel(logging.INFO)
+
+# 再创建一个handler，用于输出到控制台
+ch = logging.StreamHandler()
+ch.setLevel(logging.INFO)
+
+# 定义handler的输出格式
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+fh.setFormatter(formatter)
+ch.setFormatter(formatter)
+
+# 给logger添加handler
+logger.addHandler(fh)
+logger.addHandler(ch)
+
+# 记录一条日志
+logger.info('hello, logger, start logs')
 
 instant_reply = False
 
@@ -31,7 +54,7 @@ try:
     url = os.environ.get('URL')
     secret_key = os.environ.get('SECRET_KEY')
 except Exception as e:
-    print(f"Error while loading .env file: {e}")
+    logger(f"Error while loading .env file: {e}")
     exit(1)
 # 创建一个AskChatGPT对象
 ask_chatgpt = AskChatGPT(url)
@@ -54,15 +77,16 @@ app.logger.addHandler(handler)  # attach the handler to the app's logger
 # host = os.environ.get('REDIS_HOST')
 # password = os.environ.get('REDIS_PASSWORD')
 
+redis_host = os.getenv('REDIS_HOST', 'localhost')
 try:
     r = redis.StrictRedis(
-        host='redis',#'redis','localhost'
+        host='redis_host',#'redis','localhost'
         port=6379,
         db=0,
         decode_responses=True
     )
 except Exception as e:
-    print(f"Error while connecting to Redis: {e}")
+    logger(f"Error while connecting to Redis: {e}")
     exit(1)
 
 
@@ -134,7 +158,7 @@ def home():
 #app.py
 # @celery_app.task
 def process_data_schedule(instant_reply):
-    logging.info(f"process_data_schedule 函数被调用，instant_reply = {instant_reply}")
+    logger.info(f"process_data_schedule 函数被调用，instant_reply = {instant_reply}")
     # logging.info("进入 process_data_schedule 函数")
     if not instant_reply and not 0 <= datetime.now(pytz.timezone('Asia/Shanghai')).hour < 8:
         return
@@ -145,7 +169,7 @@ def process_data_schedule(instant_reply):
         if not instant_reply:
             sleep_time = random.uniform(2 * 60, 180 * 60 / 20)
             # sleep_time = 2
-            print(f"sleep_time: {sleep_time}")
+            logger.info(f"sleep_time: {sleep_time}")
             time.sleep(sleep_time)  # 随机间隔，不小于5分钟
             time_count += sleep_time
         with app.app_context():
@@ -164,11 +188,11 @@ def process_data_schedule(instant_reply):
                     if processed_count < 10:
                         try:
                             # try:  
-                            print(f"Input data: {input_data}")
+                            logger.info(f"Input data: {input_data}")
                             result = call_api_with_retry(lambda: ask_chatgpt.process_data(input_data))
                             # result = ask_chatgpt.process_data(input_data)
                             # result = "我爱你"
-                            print(f"Result: {result}")
+                            logger.info(f"Result: {result}")
                             # except json.JSONDecodeError as e:
                                 # print(f"Error while decoding JSON data: {e}")
                                 # 处理错误，例如使用默认值或记录错误信息
@@ -187,7 +211,7 @@ def process_data_schedule(instant_reply):
                             # 设置过期时间
                             r.expireat(counter_key, tomorrow_midnight_beijing)
                         except Exception as e:
-                            print(e)
+                            logger.info(e)
                             #给用户展示
                             error_entry = f"I'm so sorry, there is an error. If you have any questions, please contact the administrator."
                             #给管理员查看
@@ -195,7 +219,7 @@ def process_data_schedule(instant_reply):
                             r.lpush(result_key, error_entry)
                             r.lpush(error_key, error_message)  # 将错误信息存储在专门的错误信息键中
                     else:
-                        error_entry = f"输入已达上限（5个），无法继续处理。如需帮助，请联系管理员。"
+                        error_entry = f"输入已达上限（10个），无法继续处理。如需帮助，请联系管理员。"
                         r.lpush(result_key, error_entry)
         if not instant_reply and (i+1) % 20 == 0:
             if time_count < 180*60:
@@ -203,9 +227,10 @@ def process_data_schedule(instant_reply):
                 time_count = 0
         else:
             time.sleep(5)
-        logging.info(msg=f"第{i+1}次循环结束")
-        print(os.getpid())
-    logging.info("退出 process_data_schedule 函数")
+        logger.info(msg=f"第{i+1}次循环结束")
+        print('进程id', os.getpid())
+        logger.info(f'进程id: {os.getpid()}')
+    logger.info("退出 process_data_schedule 函数")
     
 def process_loop(instant_reply):
     while True:
@@ -231,5 +256,6 @@ if __name__ == '__main__':
     p = Process(target=process_loop, args=(instant_reply,))
     p.start()
     # app.run(host='0.0.0.0', port=5000, debug=True)    # process_data_schedule.delay()
-    app.run(host='0.0.0.0', port=5000, debug=False)
+    debug = os.environ.get("ENV") == "development"
+    app.run(host='0.0.0.0', port=5000, debug=debug)
     # p.join()
