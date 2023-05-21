@@ -80,7 +80,7 @@ app.secret_key = os.environ.get('SECRET_KEY')#linux必须用这行代码5.11
 redis_host = os.getenv('REDIS_HOST', 'localhost')
 try:
     r = redis.StrictRedis(
-        host='redis_host',#'redis','localhost'
+        host=redis_host,#'redis','localhost'
         port=6379,
         db=0,
         decode_responses=True
