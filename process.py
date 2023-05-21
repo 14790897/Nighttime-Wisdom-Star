@@ -5,6 +5,7 @@ import requests
 import json
 import time
 from typing import Any, List, Mapping, Optional
+import logging
 
 from dotenv import load_dotenv
 
@@ -46,9 +47,19 @@ class AskChatGPT:
             "conversation_id": conversation_id,
         }
         response = requests.post(f"{self.url}/api/conversation/talk", json=data)
-        response_data = response.text
-        response_data = json.loads(response_data)
-        parts = response_data['message']['content']['parts']
+        if response.status_code not in range(200, 300):
+            logging.error(f"API call failed with status {response.status_code}: {response.text}")
+            return json.dumps({"error": f"API call failed: {response.text}"})
+        try:
+            response_data = response.text
+            response_data=json.loads(response_data)  # 尝试解析数据
+            parts = response_data['message']['content']['parts']
+        except json.JSONDecodeError:
+            logging.error(f"Invalid JSON data: {response_data}")
+            response_data = json.dumps({"error": "Invalid data received, Jsondecodererror"})  # 创建一个错误的 JSON 响应
+        except TypeError:
+            logging.error(f"Invalid JSON data: {response_data}")
+            response_data = json.dumps({"error": "Invalid data received, type error"})
         # 将 parts 中的字符串连接起来形成完整的回复
         response_message = ''.join(parts)
         if stop:

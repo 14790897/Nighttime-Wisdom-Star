@@ -165,7 +165,8 @@ def process_data_schedule(instant_reply):
                         try:
                             # try:  
                             print(f"Input data: {input_data}")
-                            result = ask_chatgpt.process_data(input_data)
+                            result = call_api_with_retry(lambda: ask_chatgpt.process_data(input_data))
+                            # result = ask_chatgpt.process_data(input_data)
                             # result = "我爱你"
                             print(f"Result: {result}")
                             # except json.JSONDecodeError as e:
@@ -212,6 +213,17 @@ def process_loop(instant_reply):
     
 # thread = Thread(target=process_data_schedule)
 # thread.start()
+
+def call_api_with_retry(api_function, max_retries=5):
+    for i in range(max_retries):
+        try:
+            return api_function()
+        except Exception as e:
+            if i < max_retries - 1:  # i 从0开始，所以这里需要 -1
+                sleep_time = (2 ** i) + random.random()  # 指数退避 + 随机化
+                time.sleep(sleep_time)
+            else:
+                raise
 
 
 if __name__ == '__main__':

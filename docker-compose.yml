@@ -18,6 +18,8 @@ services:
       dockerfile: Dockerfile.pandora
     image: 14790897/nighttime-wisdom-star-pandora-2:latest
     pull_policy: if_not_present
+    ports:
+      - "8008:8008"
 
   redis:
     image: "redis:alpine"
