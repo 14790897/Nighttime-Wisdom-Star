@@ -25,3 +25,5 @@ EXPOSE 5000
 
 # Run application
 CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
+
+ENV TZ=Asia/Shanghai

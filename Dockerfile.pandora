@@ -20,3 +20,5 @@ EXPOSE 8008
 
 # Set the start command
 CMD ["/app/start_pandora.sh"]
+
+ENV TZ=Asia/Shanghai
