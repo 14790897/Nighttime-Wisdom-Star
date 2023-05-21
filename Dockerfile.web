@@ -5,7 +5,8 @@ RUN apt-get update && apt-get install -y \
     python3 \
     python3-pip \
     vim \
-    git 
+    git \
+    tzdata
 
 # Create application directory
 WORKDIR /home/ubuntu/app
@@ -19,11 +20,15 @@ RUN pip install -r requirements.txt
 
 # Set up the environment variables
 RUN mv .env.template .env
+# Set your custom environment variables
+ENV REDIS_HOST=redis
+ENV ENV=development
+
+# Set the timezone
+ENV TZ=Asia/Shanghai
 
 # Expose necessary ports
 EXPOSE 5000
 
 # Run application
 CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
-
-ENV TZ=Asia/Shanghai

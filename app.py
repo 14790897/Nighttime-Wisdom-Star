@@ -69,14 +69,6 @@ app.secret_key = os.environ.get('SECRET_KEY')#linux必须用这行代码5.11
 # handler.setLevel(logging.ERROR)  # only log errors and above
 # app.logger.addHandler(handler)  # attach the handler to the app's logger
 
-# 获取 Redis 连接字符串并创建连接
-# redis_url = os.environ.get('REDIS_URL')
-# r = redis.from_url(redis_url)
-
-# 创建Redis连接
-# host = os.environ.get('REDIS_HOST')
-# password = os.environ.get('REDIS_PASSWORD')
-
 redis_host = os.getenv('REDIS_HOST', 'localhost')
 try:
     r = redis.StrictRedis(
@@ -251,9 +243,8 @@ def call_api_with_retry(api_function, max_retries=5):
 
 if __name__ == '__main__':
     instant_reply = os.environ.get("ENV") == "development"
-    p = Process(target=process_loop, args=(instant_reply,))
-    p.start()
-    # app.run(host='0.0.0.0', port=5000, debug=True)    # process_data_schedule.delay()
+    # p = Process(target=process_loop, args=(instant_reply,))
+    # p.start()
     debug = os.environ.get("ENV") == "development"
     app.run(host='0.0.0.0', port=5000, debug=debug)
     # p.join()

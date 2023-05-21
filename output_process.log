@@ -1,0 +1,6 @@
+2023-05-21 15:50:25,637 - root - INFO - hello, logger, start logs
+2023-05-21 15:50:26,882 - root - INFO - hello, logger, start logs
+2023-05-21 15:50:26,884 - root - INFO - process_data_schedule 函数被调用，instant_reply = True
+2023-05-21 15:51:42,889 - root - INFO - hello, logger, start logs
+2023-05-21 15:51:44,019 - root - INFO - hello, logger, start logs
+2023-05-21 15:51:44,022 - root - INFO - process_data_schedule 函数被调用，instant_reply = True
