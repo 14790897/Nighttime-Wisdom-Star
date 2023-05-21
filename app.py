@@ -65,9 +65,9 @@ app = Flask(__name__, template_folder=os.path.join(os.path.dirname(os.path.abspa
 app.config['SECRET_KEY'] = secret_key
 app.secret_key = os.environ.get('SECRET_KEY')#linux必须用这行代码5.11
 
-handler = logging.FileHandler('flask.log')  # errors are logged to this file
-handler.setLevel(logging.ERROR)  # only log errors and above
-app.logger.addHandler(handler)  # attach the handler to the app's logger
+# handler = logging.FileHandler('flask.log')  # errors are logged to this file
+# handler.setLevel(logging.ERROR)  # only log errors and above
+# app.logger.addHandler(handler)  # attach the handler to the app's logger
 
 # 获取 Redis 连接字符串并创建连接
 # redis_url = os.environ.get('REDIS_URL')
@@ -201,8 +201,6 @@ def process_data_schedule(instant_reply):
                             r.lpush(result_key, history_entry)
                             # 更新计数器
                             r.incr(counter_key)
-                            # 设置计数器每日到期
-                            # r.expireat(counter_key, datetime.combine(datetime.now().date() + timedelta(days=1), time.min))
                             # 创建北京时间的时区对象
                             beijing_tz = timezone('Asia/Shanghai')
                             now_beijing = datetime.now(beijing_tz)
