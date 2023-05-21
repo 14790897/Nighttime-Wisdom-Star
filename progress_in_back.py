@@ -10,7 +10,6 @@ from process import AskChatGPT
 from dotenv import load_dotenv
 import logging
 import sys
-from celery import Celery
 from threading import Thread
 
 # 创建一个logger
