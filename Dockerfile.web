@@ -27,8 +27,8 @@ RUN pip3 install -r requirements.txt
 # Set up the environment variables
 RUN mv .env.template .env
 # Set your custom environment variables
-ENV REDIS_HOST=redis
-ENV ENV=development
+# ENV REDIS_HOST=redis
+# ENV ENV=production
 
 # Set the timezone
 ENV TZ=Asia/Shanghai
