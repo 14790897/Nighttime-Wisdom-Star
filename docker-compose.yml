@@ -19,8 +19,8 @@ services:
     image: pengzhile/pandora
     pull_policy: if_not_present
     environment:
-      - PANDORA_ACCESS_TOKEN=${PANDORA_ACCESS_TOKEN}
       - PANDORA_SERVER=${PANDORA_SERVER}
+      - PANDORA_ACCESS_TOKEN=${PANDORA_ACCESS_TOKEN}
     ports:
       - "8008:8008"
 
