@@ -41,7 +41,7 @@ echo "[Unit]
 Description=My Python App
 After=network.target
 
-[Service]
+[Service]~
 User=ubuntu
 WorkingDirectory=/home/ubuntu/app
 ExecStart=/usr/local/bin/gunicorn --bind 127.0.0.1:5000 app:app

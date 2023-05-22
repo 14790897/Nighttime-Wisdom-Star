@@ -141,7 +141,7 @@ def home():
     if 'username' in session:
         username = session['username']
         result_key = f"{username}:results"
-        history = r.lrange(result_key, 0, -1)
+        history = r.lrange(result_key, 0, -1)[::-1]
     else:
         flash('Please log in to submit data.', 'warning')
     return render_template('home.html', form=form, history=history)
@@ -171,7 +171,7 @@ def process_data_schedule(instant_reply):
                 result_key = f"{username}:results"
                 counter_key = f"{username}:counter"
                 error_key = f"{username}:errors"  # 新增错误信息键
-                input_data = r.lpop(data_key)
+                input_data = r.rpop(data_key)
                 # processed_count = r.llen(result_key)
                 # 获取当前用户已处理的输入数量
                 processed_count = int(r.get(counter_key) or 0)
