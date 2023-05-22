@@ -243,6 +243,7 @@ def call_api_with_retry(api_function, max_retries=5):
 
 if __name__ == '__main__':
     instant_reply = os.environ.get("ENV") == "development"
+    #此进程只适合本地调试使用，所以这部分处理输入的代码已经全部放在progress_in_back.py中，两个python代码分开运行
     # p = Process(target=process_loop, args=(instant_reply,))
     # p.start()
     debug = os.environ.get("ENV") == "development"
