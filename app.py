@@ -149,6 +149,8 @@ def home():
 
 #app.py
 # @celery_app.task
+#此进程和flask同时运行只适合本地调试使用，所以这里并没有调用处理进程，
+# 这部分处理输入的代码已经全部放在progress_in_back.py中，两个python代码分开运行
 def process_data_schedule(instant_reply):
     logger.info(f"process_data_schedule 函数被调用，instant_reply = {instant_reply}")
     # logging.info("进入 process_data_schedule 函数")
