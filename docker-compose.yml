@@ -10,7 +10,7 @@ services:
       - "5001:5000"
     depends_on:
       - redis
-      - pandora
+
 
   pandora:
     build:
@@ -23,6 +23,8 @@ services:
       - PANDORA_ACCESS_TOKEN=${PANDORA_ACCESS_TOKEN}
     ports:
       - "8008:8008"
+    depends_on:
+      - web
 
   redis:
     image: "redis:alpine"
