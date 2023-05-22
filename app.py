@@ -179,7 +179,7 @@ def process_data_schedule(instant_reply):
                 processed_count = int(r.get(counter_key) or 0)
 
                 if input_data:
-                    if processed_count < 10:
+                    if processed_count < 100: #这是每个人的提问次数，现在是每个人每天可发送100条消息
                         try:
                             # try:  
                             logger.info(f"Input data: {input_data}")
