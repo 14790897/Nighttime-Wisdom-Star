@@ -19,7 +19,8 @@ WORKDIR /home/ubuntu/app
 
 ARG CACHEBUST=1
 # Clone your application
-RUN git clone https://github.com/14790897/Nighttime-Wisdom-Star.git .
+# RUN git clone https://github.com/14790897/Nighttime-Wisdom-Star.git .
+COPY . /home/ubuntu/app/
 
 # Install Python dependencies
 RUN pip3 install -r requirements.txt
