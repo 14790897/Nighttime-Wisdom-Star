@@ -8,7 +8,7 @@ import random
 from threading import Thread
 from flask import Flask, render_template, redirect, url_for, flash, render_template_string
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import StringField, PasswordField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Length, EqualTo
 import redis
 from flask import session
@@ -96,7 +96,7 @@ class RegisterForm(FlaskForm):
     submit = SubmitField('Register')
 
 class DataForm(FlaskForm):
-    input_data = StringField('Input Data', validators=[DataRequired()])
+    input_data = TextAreaField('Input Data', validators=[DataRequired()])
     submit = SubmitField('Send Data')
 
 
@@ -127,7 +127,7 @@ def register():
 @app.route('/', methods=['GET', 'POST'])
 def home():
     form = DataForm()
-    history = []
+    chat_history = []
     if form.validate_on_submit():
         input_data = form.input_data.data
         if 'username' in session:
@@ -142,10 +142,34 @@ def home():
         username = session['username']
         result_key = f"{username}:results"
         history = r.lrange(result_key, 0, -1)[::-1]
+        chat_history = get_chat_history(history)
     else:
         flash('Please log in to submit data.', 'warning')
-    return render_template('home.html', form=form, history=history)
+    return render_template('home.html', form=form, history=chat_history)
 
+def get_chat_history(raw_data):
+    chat_history = []
+    for message in raw_data:
+        split_message = message.split(',')
+        if len(split_message) > 1:
+            for message in split_message:
+                print('message',message)
+                try:
+                    message = message.split(':')
+                    text = message[1].strip()
+                except:
+                    text = message
+                sender = 'me' if 'input' in message[0] else 'bot'
+                chat_history.append({'text': text, 'sender': sender})
+        else:
+            chat_history.append({'text': split_message[0].split(':')[1], 'sender': 'me'})
+    return chat_history
+
+# @app.after_request
+# def add_header(response):
+#     if os.environ.get("ENV") == "development":
+#         response.cache_control.no_cache = True
+#         return response
 
 #app.py
 # @celery_app.task
@@ -191,7 +215,7 @@ def process_data_schedule(instant_reply):
                                 # print(f"Error while decoding JSON data: {e}")
                                 # 处理错误，例如使用默认值或记录错误信息
                             # 拼接输入和输出字符串，并一起存入 Redis
-                            history_entry = f"输入：{input_data} 输出：{result}"
+                            history_entry = f"input:{input_data}, output:{result}"
                             r.lpush(result_key, history_entry)
                             # 更新计数器
                             r.incr(counter_key)
@@ -246,8 +270,10 @@ def call_api_with_retry(api_function, max_retries=5):
 if __name__ == '__main__':
     instant_reply = os.environ.get("ENV") == "development"
     #此进程只适合本地调试使用，所以这部分处理输入的代码已经全部放在progress_in_back.py中，两个python代码分开运行
-    # p = Process(target=process_loop, args=(instant_reply,))
-    # p.start()
+    progress_run =  os.environ.get("ENV") == "development"
+    if progress_run:
+        p = Process(target=process_loop, args=(instant_reply,))
+        p.start()
     debug = os.environ.get("ENV") == "development"
     app.run(host='0.0.0.0', port=5000, debug=debug)
     # p.join()

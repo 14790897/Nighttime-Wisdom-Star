@@ -1,20 +1,89 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>Home</h2>
-    {% if 'username' in session %}
-        <h3 class="mt-3">欢迎用户：{{ session['username'] }}</h3>
-    {% endif %}
-    <form method="POST" action="{{ url_for('home') }}" class="mt-3">
-        {{ form.csrf_token }}
-        <div class="form-group">
-            {{ form.input_data.label(class="form-control-label") }}
-            {{ form.input_data(class="form-control", size=40, autocomplete="off") }}
+    <div id="app" class='container'>
+        <div class="messages">
+            <div v-for="(message, index) in messages" :key="index" class="message" :class="{'mine': message.sender === 'me'}">
+                <span v-text="message.text"></span>
+            </div>
         </div>
-        {{ form.submit(class="btn btn-primary") }}
-    </form>
-    <br>
-    <h2>History</h2>
-    <textarea readonly rows="10" class="form-control">{{ history|join('\n') }}</textarea>
-{% endblock %}
+    </div>
 
+    <form method="POST" action="{{ url_for('home') }}" class="mt-3 input-form" id='myForm'>
+        {{ form.csrf_token }}
+        <div class="form-group form-inline">
+            {{ form.input_data(class="form-control my-input", rows=1, autocomplete="off") }}
+            {{ form.submit(class="btn btn-primary") }}
+        </div>
+    </form>    
+
+    <script src="https://unpkg.com/vue@3"></script>
+    <script>
+        const App = {
+            data() {
+                return {
+                    newMessage: '',
+                    messages: {{ history|tojson|safe }},  // 从服务器端获取聊天历史
+                };
+            },
+        };
+        Vue.createApp(App).mount('#app');
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+    </script>
+    <script>
+    $(document).ready(function(){
+        $('.my-input').on('input', function () {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+        });
+    });
+    $(document).ready(function() {
+        $('.my-input').keydown(function(e) {
+            if(e.keyCode == 13) {
+                if(e.shiftKey) {
+                    var content = this.value;
+                    var caret = getCaret(this);
+                    this.value = content.substring(0,caret)+"\n"+content.substring(caret,content.length);
+                    e.stopPropagation();
+                } else {
+                    // 可在这里添加提交表单的代码
+                    $("#myForm").submit();  // 提交表单
+                    e.preventDefault();
+                    var formData = $("#myForm").serialize();
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ url_for('home') }}",
+                        data: formData,
+                        //success: function(data){
+                            // 你的 POST 请求成功后的操作
+                          //  return redirect(url_for('home'))
+                        //}
+                    });
+                    
+                    console.log('submit');
+                }
+            }
+        });
+    
+        function getCaret(el) { 
+            if (el.selectionStart) { 
+                return el.selectionStart; 
+            } else if (document.selection) { 
+                el.focus(); 
+                var r = document.selection.createRange(); 
+                if (r == null) { 
+                    return 0; 
+                } 
+                var re = el.createTextRange(), 
+                rc = re.duplicate(); 
+                re.moveToBookmark(r.getBookmark()); 
+                rc.setEndPoint('EndToStart', re); 
+                return rc.text.length; 
+            }  
+            return 0; 
+        }
+    });
+    
+    </script>
+{% endblock %}
