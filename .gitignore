@@ -11,3 +11,4 @@ celery_config.py
 initial.py
 t
 t.json
+output*

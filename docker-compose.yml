@@ -1,9 +1,7 @@
 version: '3'
 services:
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile.web
+    
     image: 14790897/nighttime-wisdom-star-2:latest
     pull_policy: if_not_present
     ports:
@@ -14,9 +12,7 @@ services:
       - ENV=${ENV}
 
   pandora:
-    build:
-      context: .
-      dockerfile: Dockerfile.pandora
+    
     image: pengzhile/pandora
     pull_policy: if_not_present
     environment:
