@@ -62,12 +62,13 @@ ask_chatgpt = AskChatGPT(url)
 def process_data_schedule(instant_reply):
     logger.info(f"process_data_schedule 函数被调用，instant_reply = {instant_reply}")
     # logging.info("进入 process_data_schedule 函数")
-    if not instant_reply and not 0 <= datetime.now(pytz.timezone('Asia/Shanghai')).hour < 8:
+    if not instant_reply and not os.environ.get('start_time') <= \
+    datetime.now(pytz.timezone(os.environ.get('time_zone'))).hour < os.environ.get('end_time'):
         return
     
     time_count = 0
 
-    for i in range(60):  # 每三小时执行20次，共60条左右的用户信息
+    for i in range(os.environ.get('amount')):  # 每三小时执行20次，共60条左右的用户信息
         if not instant_reply:
             sleep_time = random.uniform(2 * 60, 180 * 60 / 20)
             # sleep_time = 2

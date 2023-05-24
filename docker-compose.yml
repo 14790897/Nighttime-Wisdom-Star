@@ -10,6 +10,10 @@ services:
       - redis
     environment:
       - ENV=${ENV}
+      - start_time=${start_time}
+      - end_time=${end_time}
+      - amount=${amount}
+      - time_zone=${time_zone}
 
   pandora:
     

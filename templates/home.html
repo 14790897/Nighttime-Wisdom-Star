@@ -38,6 +38,7 @@
             this.style.height = (this.scrollHeight) + 'px';
         });
     });
+
     $(document).ready(function() {
         $('.my-input').keydown(function(e) {
             if(e.keyCode == 13) {
@@ -46,9 +47,9 @@
                     var caret = getCaret(this);
                     this.value = content.substring(0,caret)+"\n"+content.substring(caret,content.length);
                     e.stopPropagation();
+                    e.preventDefault();
                 } else {
                     // 可在这里添加提交表单的代码
-                    $("#myForm").submit();  // 提交表单
                     e.preventDefault();
                     var formData = $("#myForm").serialize();
                     $.ajax({
@@ -60,11 +61,13 @@
                           //  return redirect(url_for('home'))
                         //}
                     });
+                    $("#myForm").submit();  // 提交表单
                     
                     console.log('submit');
                 }
             }
         });
+        
     
         function getCaret(el) { 
             if (el.selectionStart) { 
@@ -84,6 +87,13 @@
             return 0; 
         }
     });
+
+$(document).ready(function(){
+    $("#myForm").on('submit', function() {
+        $('.my-input').val('');
+    });
+});
+
     
     </script>
 {% endblock %}
