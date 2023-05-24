@@ -7,7 +7,7 @@
 
 本项目旨在创建一个平台，让无法直接使用 GPT-4 的用户能够通过plus账号持有者的共享体验到 GPT-4 的强大功能。
 
-演示地址：[Registration and Login System --- 注册和登录系统](http://35.166.94.139:5001/) 由于我可能会调试，所以有时无法访问，演示可以看[个人制作-plus用户向他人分享GPT4使用次数方法_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV1kk4y1s7Ke/?spm_id_from=333.1007.top_right_bar_window_history.content.click&vd_source=4a82a11c5d10f93386761e52d7c21d95)
+演示地址：[Registration and Login System --- 注册和登录系统](http://35.166.94.139:5001/) 由于我可能会调试，所以有时无法访问。
 
 如果有需要的话，我会出一期视频详细讲解代码。
 
@@ -29,45 +29,70 @@ GPT-4 的免费使用额度限制为每三小时最多25条请求。由于账号
 
 1. 进入vps的sudo模式
 
-2. Ubuntu下载install_docker_and_compose_ubuntu.sh文件，install_docker_and_compose_centos.sh下载文件
+2. Ubuntu下载install_docker_and_compose_ubuntu.sh文件，
+
+   指令：
+
+   ```bash
+   wget https://github.com/14790897/Nighttime-Wisdom-Star/raw/main/install_docker_and_compose_ubuntu.sh
+   ```
+
+   centos下载install_docker_and_compose_centos.sh文件
+
+   指令：
+
+   ```bash
+   wget https://github.com/14790897/Nighttime-Wisdom-Star/raw/main/install_docker_and_compose_centos.sh
+   ```
 
 3. 运行以下命令：
 
-   . 
+   ubuntu:
 
-   系统会提示你输入相应环境变量
+   ```bash
+   . install_docker_and_compose_ubuntu.sh
+   ```
 
-```bash
-docker-compose up
-```
+   centos:
 
-或者加上-d，后台运行
+   ```bash
+   . install_docker_and_compose_centos.sh
+   ```
 
-```bash
-docker-compose up -d
-```
+   系统会提示你输入相应环境变量，请按照提示操作。
 
 4. 等待 Docker Compose 拉取所需的镜像并启动服务，这可能需要一些时间，具体取决于你的网络速度和机器性能。
-
 5. 当所有服务都启动后，你就可以通过浏览器访问 [http://vps的IP:5001](http://vps的IP:5001) 来使用 Nighttime Wisdom Star 应用了。
 
-6. 如果想查看注册用户的所有数据？
+## FQA
 
-   首先使用后台运行模式，然后运行以下命令
+1. 如果想查看注册用户的所有数据？
 
-   ```
+   运行以下命令：
+
+   ```bash
    docker-compose exec redis sh
    ```
 
    输入`redis-cli`，进入数据库，然后请请教ChatGPT如何查看redis的数据。
 
-7. 如何修改运行时间，总回答次数？
+2. 如何再次修改运行时间，总回答次数等？
 
-   首先将整个仓库克隆到你的vps上，在vps仓库目录下，修改pogress_in_back.py对应部分，保存退出，然后运行`docker-compose build --build-arg CACHEBUST=$(date +%s) web`，重新构建镜像，之后就可以运行了，运行代码：`docker-compose up -d`。
+   修改.env文件中对应的值，完成后运行以下命令更新：
 
-如果你在使用过程中遇到任何问题，或者有任何建议，欢迎提issue。
+   ```bash
+   docker-compose down
+   ```
 
-谢谢！
+   ```bash
+   docker-compose up
+   ```
+
+   如果你在使用过程中遇到任何问题，或者有任何建议，欢迎提issue。
+
+### 谢谢！
+
+
 
 ## 使用方法（旧版，复杂，不建议使用，适合不会用docker的用户，但目前还不完善） 
 

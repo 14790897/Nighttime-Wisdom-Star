@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # 卸载旧版本Docker
-sudo apt-get remove docker docker-engine docker.io containerd runc
+sudo apt-get remove -y docker docker-engine docker.io containerd runc
 
 # 更新apt包索引
-sudo apt-get update
+sudo apt-get update -y
 
 # 安装依赖以使APT可以通过HTTPS来获取包
-sudo apt-get install \
+sudo apt-get install -y \
     apt-transport-https \
     ca-certificates \
     curl \
@@ -23,15 +23,14 @@ echo \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 # 更新apt包索引，然后安装最新版本的Docker Engine和containerd
-sudo apt-get update
-sudo apt-get install docker-ce docker-ce-cli containerd.io
+sudo apt-get update -y
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 
 # 安装docker-compose
 sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
 echo "Docker and Docker Compose installed successfully!"
-
 
 # URL of the files to be downloaded
 url1='https://github.com/14790897/Nighttime-Wisdom-Star/raw/main/docker-compose.yml'
@@ -40,7 +39,7 @@ url2='https://github.com/14790897/Nighttime-Wisdom-Star/raw/main/.env.template'
 # Download the files using wget or curl
 
 # Using wget
-sudo apt install curl wget
+sudo apt install -y curl wget
 wget $url1
 wget $url2
 
@@ -97,7 +96,7 @@ read time_zone
 if [ -z "$time_zone" ]; then
   time_zone=$time_zone_old
 fi
-sed -i "s|time_zone=.*|time_zone='$time_zone'|g" .env
+sed -i "s#time_zone=.*#time_zone='$time_zone'#g" .env
 
 echo "Environment variables set successfully!"
 

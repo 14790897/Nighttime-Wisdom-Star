@@ -85,7 +85,7 @@ read time_zone
 if [ -z "$time_zone" ]; then
   time_zone=$time_zone_old
 fi
-sed -i "s|time_zone=.*|time_zone='$time_zone'|g" .env
+sed -i "s#time_zone=.*#time_zone='$time_zone'#g" .env
 
 echo "Environment variables set successfully!"
 
