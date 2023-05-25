@@ -265,9 +265,9 @@ if __name__ == '__main__':
     instant_reply = os.environ.get("ENV") == "development"
     #此进程只适合本地调试使用，所以这部分处理输入的代码已经全部放在progress_in_back.py中，两个python代码分开运行
     progress_run =  os.environ.get("ENV") == "development"
-    if progress_run:
-        p = Process(target=process_loop, args=(instant_reply,))
-        p.start()
+    # if progress_run:
+        # p = Process(target=process_loop, args=(instant_reply,))
+        # p.start()
     debug = os.environ.get("ENV") == "development"
     app.run(host='0.0.0.0', port=5000, debug=debug)
     # p.join()

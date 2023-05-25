@@ -99,7 +99,7 @@ def process_data_schedule(instant_reply):
                             # print(f"Error while decoding JSON data: {e}")
                             # 处理错误，例如使用默认值或记录错误信息
                         # 拼接输入和输出字符串，并一起存入 Redis
-                        history_entry = f"输入：{input_data} 输出：{result}"
+                        history_entry = f"input:{input_data}, output:{result}"
                         r.lpush(result_key, history_entry)
                         # 更新计数器
                         r.incr(counter_key)

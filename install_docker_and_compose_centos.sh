@@ -50,7 +50,7 @@ ENV_old=$(grep 'ENV' .env | cut -d '=' -f2)
 echo "Please provide the following information (or press enter to keep current value):"
 
 #env
-echo "Environment setting (Example: 'production' or 'development'):"
+echo "Environment setting (default: 'production', change this to 'development' to get immediate answers):"
 read ENV
 if [ -z "$ENV" ]; then
   ENV=$ENV_old
