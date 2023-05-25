@@ -68,7 +68,7 @@ def process_data_schedule(instant_reply):
     
     time_count = 0
 
-    for i in range(os.environ.get('amount')):  # 每三小时执行20次，共60条左右的用户信息
+    for i in range(int(os.environ.get('amount'))):  # 每三小时执行20次，共60条左右的用户信息
         if not instant_reply:
             sleep_time = random.uniform(2 * 60, 180 * 60 / 20)
             # sleep_time = 2
@@ -104,7 +104,7 @@ def process_data_schedule(instant_reply):
                         # 更新计数器
                         r.incr(counter_key)
                         # 创建北京时间的时区对象
-                        beijing_tz = timezone('Asia/Shanghai')
+                        beijing_tz = timezone(os.environ.get('time_zone'))
                         now_beijing = datetime.now(beijing_tz)
                         tomorrow_midnight_beijing = beijing_tz.localize(
                             datetime.combine(now_beijing.date() + timedelta(days=1), dt_time.min))
@@ -128,16 +128,12 @@ def process_data_schedule(instant_reply):
         else:
             time.sleep(5)
         logger.info(msg=f"第{i+1}次循环结束")
-        print('进程id', os.getpid())
-        logger.info(f'进程id: {os.getpid()}')
+        logger.info(msg=f'进程id: {os.getpid()}')
     logger.info("退出 process_data_schedule 函数")
     
 def process_loop(instant_reply):
     while True:
         process_data_schedule(instant_reply)
-    
-# thread = Thread(target=process_data_schedule)
-# thread.start()
 
 def call_api_with_retry(api_function, max_retries=5):
     for i in range(max_retries):

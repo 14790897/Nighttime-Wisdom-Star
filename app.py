@@ -205,15 +205,9 @@ def process_data_schedule(instant_reply):
                 if input_data:
                     if processed_count < 100: #这是每个人的提问次数，现在是每个人每天可发送100条消息
                         try:
-                            # try:  
                             logger.info(f"Input data: {input_data}")
                             result = call_api_with_retry(lambda: ask_chatgpt.process_data(input_data))
-                            # result = ask_chatgpt.process_data(input_data)
-                            # result = "我爱你"
                             logger.info(f"Result: {result}")
-                            # except json.JSONDecodeError as e:
-                                # print(f"Error while decoding JSON data: {e}")
-                                # 处理错误，例如使用默认值或记录错误信息
                             # 拼接输入和输出字符串，并一起存入 Redis
                             history_entry = f"input:{input_data}, output:{result}"
                             r.lpush(result_key, history_entry)

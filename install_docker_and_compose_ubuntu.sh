@@ -55,9 +55,18 @@ start_time_old=$(grep 'start_time' .env | cut -d '=' -f2)
 end_time_old=$(grep 'end_time' .env | cut -d '=' -f2)
 amount_old=$(grep 'amount' .env | cut -d '=' -f2)
 time_zone_old=$(grep 'time_zone' .env | cut -d '=' -f2)
+ENV_old=$(grep 'ENV' .env | cut -d '=' -f2)
 
 # Request user input
 echo "Please provide the following information (or press enter to keep current value):"
+
+#env
+echo "Environment setting (Example: 'production' or 'development'):"
+read ENV
+if [ -z "$ENV" ]; then
+  ENV=$ENV_old
+fi
+sed -i "s|ENV=.*|ENV='$ENV'|g" .env
 
 # Access Token
 echo "PANDORA_ACCESS_TOKEN (Get it from: https://chat.openai.com/api/auth/session):"
@@ -91,7 +100,7 @@ fi
 sed -i "s|amount=.*|amount=$amount|g" .env
 
 # Time Zone
-echo "Time Zone (Example: Asia/Shanghai):"
+echo "Time Zone (Example: Asia/Shanghai)(check:sudo timedatectl list-timezones):"
 read time_zone
 if [ -z "$time_zone" ]; then
   time_zone=$time_zone_old
