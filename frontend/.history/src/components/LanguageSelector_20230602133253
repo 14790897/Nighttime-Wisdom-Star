@@ -1,0 +1,31 @@
+<template>
+    <div>
+      <select v-model="selectedLanguage">
+        <option v-for="lang in languages" :key="lang.code" :value="lang.code">{{ lang.name }}</option>
+      </select>
+    </div>
+  </template>
+  
+  <script>
+  export default {
+    data() {
+      return {
+        selectedLanguage: 'en',
+        languages: [
+          { code: 'en', name: 'English' },
+          { code: 'fr', name: 'French' },
+          { code: 'es', name: 'Spanish' },
+          // ...
+        ],
+      };
+    },
+    watch: {
+      selectedLanguage(newLang) {
+        // 当用户选择一个新的语言时，你可以在这里改变你的语言设置
+        // 例如，你可以调用 vue-i18n 的语言切换方法，或者更改你的页面上的文本等
+        this.$i18n.locale = newLang;
+      },
+    },
+  };
+  </script>
+  
