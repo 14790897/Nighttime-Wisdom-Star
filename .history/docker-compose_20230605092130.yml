@@ -3,9 +3,9 @@ version: '3.7'
 services:
   frontend:
     build: 
-      context: ./frontend  
+      context: ./vuefrontend  
       dockerfile: dockerfile.frontend
-    image: 14790897/frontend_nighttime-wisdom-star:latest
+    image: vue-frontend:latest
     ports:
       - "8080:80"
     depends_on: 
@@ -13,19 +13,13 @@ services:
 
   backend:
     build: 
-      context: ./backend
-      dockerfile: dockerfile.backend
+      context: ./path-to-flask-dockerfile
+      dockerfile: Dockerfile
     image: flask-backend:latest
     ports:
       - "5000:5000"
     depends_on: 
       - redis
-    environment:
-      - ENV=${ENV}
-      - start_time=${start_time}
-      - end_time=${end_time}
-      - amount=${amount}
-      - time_zone=${time_zone}
 
   redis:
     image: redis:latest

@@ -20,12 +20,6 @@ services:
       - "5000:5000"
     depends_on: 
       - redis
-    environment:
-      - ENV=${ENV}
-      - start_time=${start_time}
-      - end_time=${end_time}
-      - amount=${amount}
-      - time_zone=${time_zone}
 
   redis:
     image: redis:latest
