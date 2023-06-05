@@ -10,7 +10,9 @@ services:
       - backend
 
   backend:
-
+    build: 
+      context: ./backend
+      dockerfile: dockerfile.backend
     image: 14790897/backend_nighttime-wisdom-star:latest
     ports:
       - "5000:5000"
@@ -32,7 +34,7 @@ services:
 
   pandora:
     image: pengzhile/pandora
-    # pull_policy: if_not_present
+    pull_policy: if_not_present
     environment:
       - PANDORA_SERVER=${PANDORA_SERVER}
       - PANDORA_ACCESS_TOKEN=${PANDORA_ACCESS_TOKEN}
