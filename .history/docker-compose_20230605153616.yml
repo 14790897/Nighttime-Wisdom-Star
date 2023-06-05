@@ -10,9 +10,10 @@ services:
       - backend
 
   backend:
+
     image: 14790897/backend_nighttime-wisdom-star:latest
-    ports:
-      - "5000:5000"
+    # ports:
+    #   - "5000:5000"
     depends_on: 
       - redis
     environment:
@@ -26,9 +27,6 @@ services:
     image: redis:latest
     volumes:
       - /mydata:/data
-    expose:
-      - "6379"
-
 
   pandora:
     image: pengzhile/pandora
@@ -36,8 +34,6 @@ services:
     environment:
       - PANDORA_SERVER=${PANDORA_SERVER}
       - PANDORA_ACCESS_TOKEN=${PANDORA_ACCESS_TOKEN}
-    expose:
-      - "8008"
-
+    
     # ports:
     #   - "8008:8008"

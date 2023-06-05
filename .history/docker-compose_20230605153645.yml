@@ -11,8 +11,8 @@ services:
 
   backend:
     image: 14790897/backend_nighttime-wisdom-star:latest
-    ports:
-      - "5000:5000"
+    # ports:
+    #   - "5000:5000"
     depends_on: 
       - redis
     environment:
