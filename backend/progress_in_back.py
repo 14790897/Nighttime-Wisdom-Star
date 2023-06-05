@@ -108,7 +108,7 @@ def process_data_schedule(instant_reply):
                         
                         #开发环境url：http://localhost:5000/api/receive_message
                         #生产环境url：http://backend:5000/api/receive_message
-                        response = requests.post('http://backend:5000/api/receive_message', json=data)
+                        response = requests.post('http://frontend/api/receive_message', json=data)
 
                         # 更新计数器
                         r.incr(counter_key)
