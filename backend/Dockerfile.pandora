@@ -1,0 +1,24 @@
+# Use a base image with Python installed
+FROM python:3.8-slim
+
+# Set a working directory
+WORKDIR /app
+
+# Install pandora-chatgpt
+RUN pip install pandora-chatgpt
+
+# Create a JSON file for pandora, assuming t.json is your token file and it is stored in the same directory
+COPY t.json /app
+
+# Create a script to run Pandora
+RUN echo "#!/bin/bash" > /app/start_pandora.sh
+RUN echo "pandora -t t.json -s 0.0.0.0:8008" >> /app/start_pandora.sh
+RUN chmod +x /app/start_pandora.sh
+
+# Expose the port for Pandora
+EXPOSE 8008
+
+# Set the start command
+CMD ["/app/start_pandora.sh"]
+
+ENV TZ=Asia/Shanghai
