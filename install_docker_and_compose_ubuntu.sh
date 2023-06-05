@@ -33,8 +33,8 @@ sudo chmod +x /usr/local/bin/docker-compose
 echo "Docker and Docker Compose installed successfully!"
 
 # URL of the files to be downloaded
-url1='https://github.com/14790897/Nighttime-Wisdom-Star/raw/main/docker-compose.yml'
-url2='https://github.com/14790897/Nighttime-Wisdom-Star/raw/main/.env.template'
+url1='https://github.com/14790897/vue_night_star/raw/main/docker-compose.yml'
+url2='https://github.com/14790897/vue_night_star/raw/main/.env.template'
 
 # Download the files using wget or curl
 
