@@ -71,8 +71,8 @@ app.secret_key = os.environ.get('SECRET_KEY')#linux必须用这行代码5.11
 app.permanent_session_lifetime = timedelta(minutes=6000)  # Set session lifetime to 5 minutes
 # app.config['RESTPLUS_MASK_SWAGGER'] = False
 app.config['WTF_CSRF_ENABLED'] = False
-app.config['SESSION_COOKIE_SECURE'] = True
-app.config['SESSION_COOKIE_SAMESITE'] = 'None'
+app.config['SESSION_COOKIE_SECURE'] = False
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 
 # csrf = SeaSurf(app)
 
