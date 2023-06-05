@@ -15,7 +15,7 @@ services:
     build: 
       context: ./backend
       dockerfile: dockerfile.backend
-    image: 14790897/backend_nighttime-wisdom-star:latest
+    image: 14790897/frontend_nighttime-wisdom-star:latest
     ports:
       - "5000:5000"
     depends_on: 

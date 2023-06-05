@@ -8,7 +8,7 @@ WORKDIR /app
 ADD . /app
 
 # Set up the environment variables
-RUN mv .env.template .env
+#RUN mv .env.template .env
 
 
 # 安装必要的包

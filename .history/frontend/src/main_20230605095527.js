@@ -13,8 +13,9 @@ import 'bootstrap';
 const app = createApp(App)
 
 app.config.globalProperties.$http = axios;
-app.config.globalProperties.$http.defaults.baseURL = 'http://frontend:80';//http://0.0.0.0:5000 https://flaskcloud.liuweiqing.top/
+app.config.globalProperties.$http.defaults.baseURL = '//http://frontend:80';//http://0.0.0.0:5000 https://flaskcloud.liuweiqing.top/
 app.config.globalProperties.$http.defaults.withCredentials = true; 
+
 
 app.use(router)
 app.use(store)

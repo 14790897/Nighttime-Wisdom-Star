@@ -15,7 +15,7 @@ services:
     build: 
       context: ./backend
       dockerfile: dockerfile.backend
-    image: 14790897/backend_nighttime-wisdom-star:latest
+    image: flask-backend:latest
     ports:
       - "5000:5000"
     depends_on: 
@@ -35,6 +35,7 @@ services:
       - "6379:6379"
 
   pandora:
+    
     image: pengzhile/pandora
     pull_policy: if_not_present
     environment:

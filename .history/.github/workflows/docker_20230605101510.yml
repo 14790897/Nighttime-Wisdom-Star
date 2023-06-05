@@ -29,4 +29,11 @@ jobs:
           file: ./frontend/dockerfile.frontend
           push: true
           tags: 14790897/frontend_nighttime-wisdom-star:latest
-
+      
+          - name: Build and Push backend Image
+          uses: docker/build-push-action@v2
+          with:
+            context: ./backend
+            file: ./backend/Dockerfile.backend
+            push: true
+            tags: 14790897/backend_nighttime-wisdom-star:latest
