@@ -170,9 +170,7 @@
           this.errorMessage = this.$t('message.login_required');
         }
       });
-      this.socket.on('available_Chats',(data) => {
-        this.availableChats = data.data.availableChats;
-      });
+      this.socket.on('available_Chats',(data))
       this.$http.get('/api/init_chat')
         .then(response => {
           this.start_time = response.data.start_time;

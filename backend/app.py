@@ -209,6 +209,7 @@ def receive_message():
     logger.info('socketio结果信息已发送')
     global counts 
     counts = message_data.get('remain_counts', counts)
+    socketio.emit('available_Chats', {'availableChats': counts})
     return '', 200  # 添加这一行代码，返回状态码200
 
 @app.route('/api/available_chats', methods=['GET'])

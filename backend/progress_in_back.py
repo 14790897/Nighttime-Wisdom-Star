@@ -108,7 +108,7 @@ def process_data_schedule(instant_reply):
                             "username": username,
                             "input": input_data,
                             "output": result,
-                            "remain_counts": remain_counts_key,
+                            "remain_counts": remaining_counts,
                         }
                         
                         #开发环境url：http://localhost:5000/api/receive_message

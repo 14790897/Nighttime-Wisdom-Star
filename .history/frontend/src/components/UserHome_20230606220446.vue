@@ -171,7 +171,7 @@
         }
       });
       this.socket.on('available_Chats',(data) => {
-        this.availableChats = data.data.availableChats;
+        this.availableChats = data.availableChats;
       });
       this.$http.get('/api/init_chat')
         .then(response => {
