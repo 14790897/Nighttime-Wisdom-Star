@@ -103,7 +103,8 @@ def process_data_schedule(instant_reply):
                         data = {
                             "username": username,
                             "input": input_data,
-                            "output": result
+                            "output": result,
+                            "remain_counts": os.environ.get('amount') - i - 1,
                         }
                         
                         #开发环境url：http://localhost:5000/api/receive_message

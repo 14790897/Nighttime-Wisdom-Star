@@ -170,11 +170,9 @@
           this.errorMessage = this.$t('message.login_required');
         }
       });
-      this.$http.get('/api/init_chat')
-        .then(response => {
-          this.start_time = response.data.start_time;
-          this.end_time = response.data.end_time;
-        })
+      this.$http.get('/api/init_chat').then(response => {
+            this.availableChats = response.data.availableChats;
+          })
     },
     mounted() {
       this.$refs.myInput.addEventListener('input', this.adjustHeight);

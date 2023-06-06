@@ -126,7 +126,7 @@
       getAvailableChats() {
         this.$http.get('/api/available_chats')
           .then(response => {
-            this.availableChats = response.data.availableChats;
+            this.availableChats = response.data;
           })
           .catch(error => {
             console.error('Error occurred:', error);
@@ -170,11 +170,6 @@
           this.errorMessage = this.$t('message.login_required');
         }
       });
-      this.$http.get('/api/init_chat')
-        .then(response => {
-          this.start_time = response.data.start_time;
-          this.end_time = response.data.end_time;
-        })
     },
     mounted() {
       this.$refs.myInput.addEventListener('input', this.adjustHeight);
@@ -182,9 +177,8 @@
     beforeUnmount() {
       this.$refs.myInput.removeEventListener('input', this.adjustHeight);
       if (this.socket) {
-        this.socket.disconnect(); // 在组件卸载前断开连接
+      this.socket.disconnect(); // 在组件卸载前断开连接
       }
-      this.stopPolling();
     }
   };
   </script>

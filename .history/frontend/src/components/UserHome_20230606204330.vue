@@ -116,23 +116,7 @@
             }  
             return 0; 
         },
-        startPolling() {
-        this.polling = setInterval(this.getAvailableChats, 5000); // 每5秒请求一次
-      },
-      stopPolling() {
-        clearInterval(this.polling);
-        this.polling = null;
-      },
-      getAvailableChats() {
-        this.$http.get('/api/available_chats')
-          .then(response => {
-            this.availableChats = response.data.availableChats;
-          })
-          .catch(error => {
-            console.error('Error occurred:', error);
-            this.stopPolling(); // 如果发生错误，停止轮询
-          });
-      },        
+        this.startPolling();
     },
     watch: {
     messages() {
@@ -144,7 +128,6 @@
     },
     created() {
       // this.socket = io.connect('https://flaskcloud.liuweiqing.top/', {withCredentials: true});
-      this.startPolling();
       if (!this.socket) {
         this.socket = io('/', { withCredentials: true });
       }
@@ -170,11 +153,6 @@
           this.errorMessage = this.$t('message.login_required');
         }
       });
-      this.$http.get('/api/init_chat')
-        .then(response => {
-          this.start_time = response.data.start_time;
-          this.end_time = response.data.end_time;
-        })
     },
     mounted() {
       this.$refs.myInput.addEventListener('input', this.adjustHeight);
@@ -182,9 +160,8 @@
     beforeUnmount() {
       this.$refs.myInput.removeEventListener('input', this.adjustHeight);
       if (this.socket) {
-        this.socket.disconnect(); // 在组件卸载前断开连接
+      this.socket.disconnect(); // 在组件卸载前断开连接
       }
-      this.stopPolling();
     }
   };
   </script>

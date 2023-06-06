@@ -107,6 +107,7 @@ def login():
     else:
         return {'status': 'failed', 'message': 'Login failed. Check your username and password.'}, 401
 
+    
 @socketio.on('home_ready')
 def handle_home_ready():
     if session.get('username'):
@@ -198,6 +199,7 @@ def get_chat_history(raw_data,username):
     print('chat_history',chat_history)
     return chat_history
 
+counts = -1
 @app.route('/api/receive_message', methods=['POST'])
 def receive_message():
     message_data = request.get_json()
@@ -205,9 +207,25 @@ def receive_message():
     logger.info('-----message-room------', username)
     socketio.emit('result', {'data': message_data}, room=username)
     logger.info('socketio结果信息已发送')
+    global counts 
+    counts = message_data.get('remain_counts', counts)
     return '', 200  # 添加这一行代码，返回状态码200
 
-
+@app.route('/api/available_chats', methods=['GET'])
+def available_chats():
+    if counts == -1:
+        default_value = os.environ.get('amount')
+        if default_value is None:
+            default_value = "0"  # or some other default value
+        return jsonify(availableChats=default_value)
+    else:
+        return jsonify(availableChats=counts)
+    
+@app.route('/api/init_chat', methods=['GET'])
+def init_chat():
+    return jsonify(start_time=os.environ.get('start_time'), end_time=os.environ.get('end_time'))
+    
+    
 if __name__ == '__main__':
     debug = os.environ.get("ENV") == "development"
     socketio.run(app, host='0.0.0.0', port=5000, debug=debug)

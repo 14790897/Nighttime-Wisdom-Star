@@ -1,7 +1,4 @@
 <template>
-    <div class="banner">
-      There are still {{ availableChats }} chances to use today, start time: {{ start_time }}, end time: {{ end_time }}.
-    </div>
     <div v-if="errorMessage" class="alert alert-danger">
       {{ errorMessage }}
     </div>
@@ -31,10 +28,6 @@
         csrf_token: '',//{{ csrf_token }}
         errorMessage: '',
         socket: null, // 在这里添加 socket 属性
-        availableChats: 0,
-        start_time: '',
-        end_time: '',
-        polling: null,
       };
     },
     computed: {
@@ -115,36 +108,18 @@
                 return rc.text.length; 
             }  
             return 0; 
-        },
-        startPolling() {
-        this.polling = setInterval(this.getAvailableChats, 5000); // 每5秒请求一次
-      },
-      stopPolling() {
-        clearInterval(this.polling);
-        this.polling = null;
-      },
-      getAvailableChats() {
-        this.$http.get('/api/available_chats')
-          .then(response => {
-            this.availableChats = response.data.availableChats;
-          })
-          .catch(error => {
-            console.error('Error occurred:', error);
-            this.stopPolling(); // 如果发生错误，停止轮询
-          });
-      },        
+        }
     },
     watch: {
     messages() {
       this.$nextTick(() => {
-        const container = this.$el.querySelector('.messages');
+        const container = document.querySelector('.messages');
         container.scrollTop = container.scrollHeight;
         });
       }
     },
     created() {
       // this.socket = io.connect('https://flaskcloud.liuweiqing.top/', {withCredentials: true});
-      this.startPolling();
       if (!this.socket) {
         this.socket = io('/', { withCredentials: true });
       }
@@ -170,11 +145,6 @@
           this.errorMessage = this.$t('message.login_required');
         }
       });
-      this.$http.get('/api/init_chat')
-        .then(response => {
-          this.start_time = response.data.start_time;
-          this.end_time = response.data.end_time;
-        })
     },
     mounted() {
       this.$refs.myInput.addEventListener('input', this.adjustHeight);
@@ -182,9 +152,8 @@
     beforeUnmount() {
       this.$refs.myInput.removeEventListener('input', this.adjustHeight);
       if (this.socket) {
-        this.socket.disconnect(); // 在组件卸载前断开连接
-      }
-      this.stopPolling();
+      this.socket.disconnect(); // 在组件卸载前断开连接
+    }
     }
   };
   </script>
@@ -256,14 +225,6 @@
   white-space: nowrap;
 }
   
-.banner {
-  width: 100%;
-  height: 50px;
-  line-height: 50px;
-  background-color: #f9f9f9;
-  text-align: center;
-  color: #333;
-}  
 </style>
 
   
