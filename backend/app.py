@@ -202,9 +202,9 @@ def get_chat_history(raw_data,username):
 def receive_message():
     message_data = request.get_json()
     username = message_data['username']
-    print('-----message-room------', username)
+    logger.info('-----message-room------', username)
     socketio.emit('result', {'data': message_data}, room=username)
-    print('socketio结果信息已发送')
+    logger.info('socketio结果信息已发送')
     return '', 200  # 添加这一行代码，返回状态码200
 
 

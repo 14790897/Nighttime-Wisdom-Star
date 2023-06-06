@@ -7,18 +7,15 @@ import i18n from './i18n'
 import * as Sentry from "@sentry/vue";
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap.js'
-import 'bootstrap';
-import { io } from "socket.io-client";
+import 'bootstrap';import { io } from "socket.io-client";
+
+
 
 const app = createApp(App)
 
 app.config.globalProperties.$http = axios;
 app.config.globalProperties.$http.defaults.baseURL = '/';//http://0.0.0.0:5000 https://flaskcloud.liuweiqing.top/  http://frontend:80
 app.config.globalProperties.$http.defaults.withCredentials = true; 
-const socket = io({
-  withCredentials: true
-});
-app.config.globalProperties.$socket = socket; // 添加到全局属性
 
 
 app.use(router)

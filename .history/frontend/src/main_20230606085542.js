@@ -11,7 +11,6 @@ import 'bootstrap';
 import { io } from "socket.io-client";
 
 const app = createApp(App)
-
 app.config.globalProperties.$http = axios;
 app.config.globalProperties.$http.defaults.baseURL = '/';//http://0.0.0.0:5000 https://flaskcloud.liuweiqing.top/  http://frontend:80
 app.config.globalProperties.$http.defaults.withCredentials = true; 

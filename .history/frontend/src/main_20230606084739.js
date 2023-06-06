@@ -10,6 +10,9 @@ import 'bootstrap/dist/js/bootstrap.js'
 import 'bootstrap';
 import { io } from "socket.io-client";
 
+
+
+
 const app = createApp(App)
 
 app.config.globalProperties.$http = axios;
