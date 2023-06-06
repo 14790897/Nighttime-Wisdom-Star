@@ -113,7 +113,7 @@
     created() {
       // this.socket = io.connect('https://flaskcloud.liuweiqing.top/', {withCredentials: true});
       if (!this.socket) {
-        this.socket = io('/', { withCredentials: true });
+        this.$socket = io('/', { withCredentials: true });
       }
       this.socket.on('login_success',  () => {
         // After receiving the 'login_success' event, emit a 'join' event with the username.
