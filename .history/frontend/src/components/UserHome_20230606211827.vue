@@ -129,7 +129,7 @@
             this.availableChats = response.data.availableChats;
           })
           .catch(error => {
-            console.error('Error occurred in long polling:', error);
+            console.error('Error occurred:', error);
             this.stopPolling(); // 如果发生错误，停止轮询
           });
       },        
@@ -174,7 +174,6 @@
         .then(response => {
           this.start_time = response.data.start_time;
           this.end_time = response.data.end_time;
-          this.availableChats = response.data.availableChats;
         }).catch(error => {
           console.error('Init_chat error occurred:', error);
         });

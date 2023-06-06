@@ -70,6 +70,8 @@ def process_data_schedule(instant_reply):
         return
     
     time_count = 0
+    remain_counts_key = "remain_counts"  # 新建剩余次数键6.6
+    r.set(remain_counts_key, int(os.environ.get('amount')))  # 初始化剩余次数6.6
 
     for i in range(int(os.environ.get('amount'))):  # 每三小时执行20次，共60条左右的用户信息
         if not instant_reply:
@@ -99,12 +101,14 @@ def process_data_schedule(instant_reply):
                         # 拼接输入和输出字符串，并一起存入 Redis
                         history_entry = f"input:{input_data}, output:{result}"
                         r.lpush(result_key, history_entry)
-                        
+                        remaining_counts = int(os.environ.get('amount')) - processed_count - 1  # 计算剩余次数
+                        r.set(remain_counts_key, remaining_counts)  # 将剩余次数存入 Redis
+
                         data = {
                             "username": username,
                             "input": input_data,
                             "output": result,
-                            "remain_counts": os.environ.get('amount') - i - 1,
+                            "remain_counts": remain_counts_key,
                         }
                         
                         #开发环境url：http://localhost:5000/api/receive_message

@@ -174,7 +174,7 @@
         .then(response => {
           this.start_time = response.data.start_time;
           this.end_time = response.data.end_time;
-          this.availableChats = response.data.availableChats;
+          this.availableChats
         }).catch(error => {
           console.error('Init_chat error occurred:', error);
         });
