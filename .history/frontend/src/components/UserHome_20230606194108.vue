@@ -17,7 +17,7 @@
 </template>
   
   <script>
-  import io from 'socket.io-client';
+  // import io from 'socket.io-client';
   import { mapState } from 'vuex';
   
   export default {
@@ -111,7 +111,7 @@
         }
     },
     created() {
-      // this.socket = io.connect('https://flaskcloud.liuweiqing.top/', {withCredentials: true});
+      this.socket = io.connect('https://flaskcloud.liuweiqing.top/', {withCredentials: true});
       if (!this.socket) {
         this.socket = io('/', { withCredentials: true });
       }
