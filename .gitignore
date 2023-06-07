@@ -20,6 +20,6 @@ frontend/*.ntvs*
 frontend/*.njsproj
 frontend/*.sln
 frontend/*.sw?
-
+.history
 ~
 ~.pub
