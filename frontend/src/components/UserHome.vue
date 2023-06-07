@@ -148,7 +148,7 @@
       // this.socket = io.connect('https://flaskcloud.liuweiqing.top/', {withCredentials: true});
       // this.startPolling();
       if (!this.socket) {
-        this.socket = io('/', { withCredentials: true });
+        this.socket = io(process.env.VUE_APP_SOCKET_URL, { withCredentials: true });
       }
       this.socket.on('login_success',  () => {
         // After receiving the 'login_success' event, emit a 'join' event with the username.
@@ -173,6 +173,7 @@
         }
       });
       this.socket.on('available_Chats',(data) => {
+        console.log('available_Chats:', data);
         this.availableChats = data.data.availableChats;
       });
       this.$http.get('/api/init_chat')//6.6
