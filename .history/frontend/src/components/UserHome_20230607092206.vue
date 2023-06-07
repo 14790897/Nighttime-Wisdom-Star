@@ -6,8 +6,6 @@
       {{ errorMessage }} 
     </div>
     <div class="messages container">
-       <!-- 使用 v-for 渲染一个空的 div 占位，确保 .messages 对应的元素总是存在的 -->
-      <div v-if="messages.length === 0"></div>
       <div v-for="(message, index) in messages" :key="index" class="message" :class="{'mine': message.sender === 'me'}">
         <span v-text="message.text"></span>
       </div>
@@ -62,7 +60,7 @@
             console.log(this.newMessage)
             this.messages.push({ sender: 'me', text: this.newMessage });
             this.newMessage = '';
-            // this.$refs.myInput.value = '';
+            this.$refs.myInput.value = '';
           })
           .catch(error => {
             console.error(error);
@@ -100,26 +98,26 @@
                 console.log('submit');
             }
         }
-      },
-      getCaret(el) {
-          if (el.selectionStart) { 
-              return el.selectionStart; 
-          } else if (document.selection) { 
-              el.focus(); 
-              var r = document.selection.createRange(); 
-              if (r == null) { 
-                  return 0; 
-              } 
-              var re = el.createTextRange(), 
-              rc = re.duplicate(); 
-              re.moveToBookmark(r.getBookmark()); 
-              rc.setEndPoint('EndToStart', re); 
-              return rc.text.length; 
-          }  
-          return 0; 
-      },
-      startPolling() {
-      this.polling = setInterval(this.getAvailableChats, 5000); // 每5秒请求一次
+        },
+        getCaret(el) {
+            if (el.selectionStart) { 
+                return el.selectionStart; 
+            } else if (document.selection) { 
+                el.focus(); 
+                var r = document.selection.createRange(); 
+                if (r == null) { 
+                    return 0; 
+                } 
+                var re = el.createTextRange(), 
+                rc = re.duplicate(); 
+                re.moveToBookmark(r.getBookmark()); 
+                rc.setEndPoint('EndToStart', re); 
+                return rc.text.length; 
+            }  
+            return 0; 
+        },
+        startPolling() {
+        this.polling = setInterval(this.getAvailableChats, 5000); // 每5秒请求一次
       },
       stopPolling() {
         clearInterval(this.polling);
@@ -146,7 +144,7 @@
     },
     created() {
       // this.socket = io.connect('https://flaskcloud.liuweiqing.top/', {withCredentials: true});
-      // this.startPolling();
+      this.startPolling();
       if (!this.socket) {
         this.socket = io('/', { withCredentials: true });
       }
@@ -192,7 +190,7 @@
       if (this.socket) {
         this.socket.disconnect(); // 在组件卸载前断开连接
       }
-      // this.stopPolling();
+      this.stopPolling();
     }
   };
   </script>

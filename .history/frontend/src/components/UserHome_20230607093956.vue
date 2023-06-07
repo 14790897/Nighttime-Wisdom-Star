@@ -146,7 +146,7 @@
     },
     created() {
       // this.socket = io.connect('https://flaskcloud.liuweiqing.top/', {withCredentials: true});
-      // this.startPolling();
+      this.startPolling();
       if (!this.socket) {
         this.socket = io('/', { withCredentials: true });
       }
@@ -192,7 +192,7 @@
       if (this.socket) {
         this.socket.disconnect(); // 在组件卸载前断开连接
       }
-      // this.stopPolling();
+      this.stopPolling();
     }
   };
   </script>

@@ -192,7 +192,7 @@
       if (this.socket) {
         this.socket.disconnect(); // 在组件卸载前断开连接
       }
-      // this.stopPolling();
+      this.stopPolling();
     }
   };
   </script>

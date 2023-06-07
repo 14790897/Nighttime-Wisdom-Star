@@ -100,42 +100,42 @@
                 console.log('submit');
             }
         }
+        },
+        getCaret(el) {
+            if (el.selectionStart) { 
+                return el.selectionStart; 
+            } else if (document.selection) { 
+                el.focus(); 
+                var r = document.selection.createRange(); 
+                if (r == null) { 
+                    return 0; 
+                } 
+                var re = el.createTextRange(), 
+                rc = re.duplicate(); 
+                re.moveToBookmark(r.getBookmark()); 
+                rc.setEndPoint('EndToStart', re); 
+                return rc.text.length; 
+            }  
+            return 0; 
+        },
+        startPolling() {
+        this.polling = setInterval(this.getAvailableChats, 5000); // 每5秒请求一次
+        },
+        stopPolling() {
+          clearInterval(this.polling);
+          this.polling = null;
+        },
+        getAvailableChats() {
+          this.$http.get('/api/available_chats')
+            .then(response => {
+              this.availableChats = response.data.availableChats;
+            })
+            .catch(error => {
+              console.error('Error occurred in long polling:', error);
+              this.stopPolling(); // 如果发生错误，停止轮询
+            });
+        },        
       },
-      getCaret(el) {
-          if (el.selectionStart) { 
-              return el.selectionStart; 
-          } else if (document.selection) { 
-              el.focus(); 
-              var r = document.selection.createRange(); 
-              if (r == null) { 
-                  return 0; 
-              } 
-              var re = el.createTextRange(), 
-              rc = re.duplicate(); 
-              re.moveToBookmark(r.getBookmark()); 
-              rc.setEndPoint('EndToStart', re); 
-              return rc.text.length; 
-          }  
-          return 0; 
-      },
-      startPolling() {
-      this.polling = setInterval(this.getAvailableChats, 5000); // 每5秒请求一次
-      },
-      stopPolling() {
-        clearInterval(this.polling);
-        this.polling = null;
-      },
-      getAvailableChats() {
-        this.$http.get('/api/available_chats')
-          .then(response => {
-            this.availableChats = response.data.availableChats;
-          })
-          .catch(error => {
-            console.error('Error occurred in long polling:', error);
-            this.stopPolling(); // 如果发生错误，停止轮询
-          });
-      },        
-    },
     watch: {
     messages() {
       this.$nextTick(() => {
@@ -146,7 +146,7 @@
     },
     created() {
       // this.socket = io.connect('https://flaskcloud.liuweiqing.top/', {withCredentials: true});
-      // this.startPolling();
+      this.startPolling();
       if (!this.socket) {
         this.socket = io('/', { withCredentials: true });
       }
@@ -192,7 +192,7 @@
       if (this.socket) {
         this.socket.disconnect(); // 在组件卸载前断开连接
       }
-      // this.stopPolling();
+      this.stopPolling();
     }
   };
   </script>
