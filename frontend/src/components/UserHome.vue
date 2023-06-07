@@ -175,7 +175,7 @@
       this.socket.on('available_Chats',(data) => {
         this.availableChats = data.data.availableChats;
       });
-      this.$http.get('/api/init_chat')
+      this.$http.get('/api/init_chat')//6.6
         .then(response => {
           this.start_time = response.data.start_time;
           this.end_time = response.data.end_time;
