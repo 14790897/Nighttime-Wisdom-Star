@@ -182,7 +182,7 @@ def get_chat_history(raw_data,username):
             for message in split_message:
                 print('message', message)
                 try:
-                    message = message.split(':')
+                    message = message.split(':', 1)
                     text = message[1].strip()
                 except:
                     text = message
