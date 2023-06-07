@@ -13,9 +13,8 @@
        <!-- 使用 v-for 渲染一个空的 div 占位，确保 .messages 对应的元素总是存在的 -->
       <div v-if="messages.length === 0"></div>
       <div v-for="(message, index) in messages" :key="index" class="message" :class="{'mine': message.sender === 'me'}">
-        <span v-text="message.text"></span>
-      </div>
-      
+        <span v-html="convertMarkdownToHtml(message.text)"></span>
+      </div>  
     </div>
     <form class="mt-3 input-form" @submit.prevent="sendMessage">
         <div class="form-group form-inline">
@@ -27,6 +26,7 @@
   
   <script>
   import io from 'socket.io-client';
+  import MarkdownIt from 'markdown-it';
   import { mapState } from 'vuex';
   
   export default {
@@ -48,6 +48,10 @@
       ...mapState(['username'])
     },
     methods: {
+      convertMarkdownToHtml(markdownText) {
+        const md = new MarkdownIt();
+        return md.render(markdownText);
+      },
       sendMessage() {
         if (!this.newMessage.trim()) {
           return; // 如果消息为空，不发送
