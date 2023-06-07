@@ -212,6 +212,12 @@ def receive_message():
     socketio.emit('available_Chats', {'availableChats': counts})
     return '', 200  # 添加这一行代码，返回状态码200 .
 
+@app.route('/api/limit_warning', methods=['GET'])
+def limit_warning():
+    logger.info('-----limit_warning------')
+    socketio.emit('limit_warning')
+    return '', 200
+
 @app.route('/api/available_chats', methods=['GET'])
 def available_chats():
     if counts == -1:

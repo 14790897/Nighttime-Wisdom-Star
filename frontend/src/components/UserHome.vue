@@ -2,6 +2,10 @@
     <div class="banner">
       There are still {{ availableChats }} chances to use today, start at {{ start_time }} hour, end at {{ end_time }} hour.
     </div>
+    <div class="warning" v-show="showWarning">
+      The limit of twenty-five bars per three hours has been reached.
+    </div>
+
     <div v-if="errorMessage" class="alert alert-danger">
       {{ errorMessage }} 
     </div>
@@ -37,6 +41,7 @@
         start_time: '',
         end_time: '',
         polling: null,
+        showWarning: false,
       };
     },
     computed: {
@@ -148,6 +153,10 @@
         this.socket.emit('join');
       });
       this.socket.emit('home_ready');
+      // 每三小时25条警告6.7
+      this.socket.on('limit_warning', () => {
+        this.showWarning = true;
+      });
 
       this.socket.on('result', (data) => {
         let data_processed = data   //JSON.parse(data)???
@@ -275,7 +284,16 @@
   background-color: #f9f9f9;
   text-align: center;
   color: #333;
-}  
+} 
+
+.warning {
+    color: red;
+    font-size: 20px;
+    background-color: yellow;
+    padding: 10px;
+    border: 2px solid red;
+    border-radius: 5px;
+}
 </style>
 
   

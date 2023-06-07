@@ -75,8 +75,9 @@ def process_data_schedule(instant_reply):
 
     for i in range(int(os.environ.get('amount'))):  # 每三小时执行20次，共60条左右的用户信息
         if not instant_reply:
-            sleep_time = random.uniform(2 * 60, 180 * 60 / 20)
-            # sleep_time = 2
+            # sleep_time = random.uniform(2 * 60, 180 * 60 / 20)
+            #将睡眠时间变短 6.7
+            sleep_time = 10
             logger.info(f"sleep_time: {sleep_time}")
             time.sleep(sleep_time)  # 随机间隔，不小于5分钟
             time_count += sleep_time
@@ -90,7 +91,6 @@ def process_data_schedule(instant_reply):
             # processed_count = r.llen(result_key)
             # 获取当前用户已处理的输入数量
             processed_count = int(r.get(counter_key) or 0)
-
             if input_data:
                 if processed_count < 100:
                     try:
@@ -110,12 +110,7 @@ def process_data_schedule(instant_reply):
                             "output": result,
                             "remain_counts": remaining_counts,
                         }
-                        
-                        #开发环境url：http://localhost:5000/api/receive_message
-                        #生产环境url：http://backend:5000/api/receive_message
-                        #http://frontend/api/receive_message
                         response = requests.post('http://localhost:5000/api/receive_message', json=data)
-
                         # 更新计数器
                         r.incr(counter_key)
                         # 创建北京时间的时区对象
@@ -136,7 +131,8 @@ def process_data_schedule(instant_reply):
                 else:
                     error_entry = f"输入已达上限（100个），无法继续处理。如需帮助，请联系管理员。"
                     r.lpush(result_key, error_entry)
-        if not instant_reply and (i+1) % 20 == 0:
+        if not instant_reply and (i+1) % 25 == 0:
+            response = requests.get('http://localhost:5000/api/limit_warning')
             if time_count < 180*60:
                 time.sleep(180*60 - time_count)
                 time_count = 0
