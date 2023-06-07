@@ -7,7 +7,7 @@
 
 本项目旨在创建一个平台，让无法直接使用 GPT-4 的用户能够通过plus账号持有者的共享体验到 GPT-4 的强大功能。
 
-演示地址：[Registration and Login System --- 注册和登录系统](http://54.252.59.8:5001/)由于我可能会调试，所以有时无法访问。
+演示地址：[Registration and Login System --- 注册和登录系统](https://share.liuweiqing.top/)(这是真的gpt4)由于我可能会调试，所以有时无法访问。
 
 如果有需要的话，我会出一期视频详细讲解代码。
 

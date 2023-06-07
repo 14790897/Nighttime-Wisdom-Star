@@ -7,7 +7,7 @@
 
 This project aims to create a platform that allows users who cannot directly use GPT-4 to experience the powerful functions of GPT-4 through the sharing of plus account holders.
 
-Demo address: [Registration and Login System --- Registration and Login System](http://35.166.94.139:5001/) Because I may be debugging, sometimes I cannot access it.
+Demo address: [Registration and Login System --- Registration and Login System](https://share.liuweiqing.top/)(true gpt4) Because I may be debugging, sometimes I cannot access it.
 
 If necessary, I will release a video to explain the code in detail.
 
