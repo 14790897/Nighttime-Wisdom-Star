@@ -1,11 +1,11 @@
 <template>
     <div class="banner">
-      There are still {{ availableChats }} chances to use today, start time: {{ start_time }}, end time: {{ end_time }}.
+      There are still {{ availableChats }} chances to use today, start at {{ start_time }} hour, end at {{ end_time }} hour.
     </div>
     <div v-if="errorMessage" class="alert alert-danger">
       {{ errorMessage }} 
     </div>
-    <div class="messages container">
+    <div class="messages container" ref="messageContainer">
        <!-- 使用 v-for 渲染一个空的 div 占位，确保 .messages 对应的元素总是存在的 -->
       <div v-if="messages.length === 0"></div>
       <div v-for="(message, index) in messages" :key="index" class="message" :class="{'mine': message.sender === 'me'}">
@@ -136,14 +136,7 @@
           });
       },        
     },
-    watch: {
-    messages() {
-      this.$nextTick(() => {
-        const container = this.$el.querySelector('.messages');
-        container.scrollTop = container.scrollHeight;
-        });
-      }
-    },
+    
     created() {
       // this.socket = io.connect('https://flaskcloud.liuweiqing.top/', {withCredentials: true});
       // this.startPolling();
@@ -174,19 +167,29 @@
       });
       this.socket.on('available_Chats',(data) => {
         console.log('available_Chats:', data);
-        this.availableChats = data.data.availableChats;
+        this.availableChats = data.availableChats;
       });
       this.$http.get('/api/init_chat')//6.6
         .then(response => {
           this.start_time = response.data.start_time;
           this.end_time = response.data.end_time;
+          console.log('available_Chats:', response.data.availableChats);
           this.availableChats = response.data.availableChats;
         }).catch(error => {
           console.error('Init_chat error occurred:', error);
         });
     },
     mounted() {
-      this.$refs.myInput.addEventListener('input', this.adjustHeight);
+      this.$watch('messages', () => {
+        this.$nextTick(() => {
+          const container = this.$refs.messageContainer;
+          if (!container) {
+            console.error('Could not find element with ref "messageContainer"');
+            return;
+          }
+          container.scrollTop = container.scrollHeight;
+        });
+      });
     },
     beforeUnmount() {
       this.$refs.myInput.removeEventListener('input', this.adjustHeight);

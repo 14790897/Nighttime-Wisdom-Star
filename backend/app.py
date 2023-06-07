@@ -224,7 +224,7 @@ def available_chats():
     
 @app.route('/api/init_chat', methods=['GET'])
 def init_chat():
-    return jsonify(start_time=os.environ.get('start_time'), end_time=os.environ.get('end_time'), availableChats=r.get('remain_counts_key'))
+    return jsonify(start_time=os.environ.get('start_time'), end_time=os.environ.get('end_time'), availableChats=r.get('remain_counts'))
     
     
 if __name__ == '__main__':
