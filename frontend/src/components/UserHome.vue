@@ -3,7 +3,7 @@
       There are still {{ availableChats }} chances to use today, start at {{ start_time }} hour, end at {{ end_time }} hour.
     </div>
     <div class="warning" v-show="showWarning">
-      The limit of twenty-five bars per three hours has been reached.
+      The limit of twenty-five bars per three hours has been reached. Please come back after.
     </div>
 
     <div v-if="errorMessage" class="alert alert-danger">

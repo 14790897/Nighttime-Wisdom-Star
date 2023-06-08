@@ -65,15 +65,26 @@ ask_chatgpt = AskChatGPT(url)
 def process_data_schedule(instant_reply):
     logger.info(f"process_data_schedule 函数被调用，instant_reply = {instant_reply}")
     # logging.info("进入 process_data_schedule 函数")
-    if not instant_reply and not os.environ.get('start_time') <= \
-    datetime.now(pytz.timezone(os.environ.get('time_zone'))).hour < os.environ.get('end_time'):
-        return
+    current_hour = datetime.now(pytz.timezone(os.environ.get('time_zone'))).hour
+    start_time = int(os.environ.get('start_time'))
+    end_time = int(os.environ.get('end_time'))
     
+    process_counter_key = "process_counter"  # 新建处理计数键
+    r.set(process_counter_key, 0)  # 初始化处理计数键
+
+    if not instant_reply:
+        if start_time < end_time:
+            if not start_time <= current_hour < end_time:
+                return
+        else:  # 当 'start_time' >= 'end_time'，考虑时间跨越午夜的情况
+            if end_time <= current_hour <= start_time:
+                return    
     time_count = 0
     remain_counts_key = "remain_counts"  # 新建剩余次数键6.6
     r.set(remain_counts_key, int(os.environ.get('amount')))  # 初始化剩余次数6.6
 
-    for i in range(int(os.environ.get('amount'))):  # 每三小时执行20次，共60条左右的用户信息
+    # for i in range(int(os.environ.get('amount'))):  # 每三小时执行20次，共60条左右的用户信息
+    while int(r.get(remain_counts_key)) > 0:  # 当剩余次数大于0时，继续执行
         if not instant_reply:
             # sleep_time = random.uniform(2 * 60, 180 * 60 / 20)
             #将睡眠时间变短 6.7
@@ -97,6 +108,9 @@ def process_data_schedule(instant_reply):
                         logger.info(f"Input data: {input_data}")
                         result = call_api_with_retry(lambda: ask_chatgpt.process_data(input_data))
                         logger.info(f"Result: {result}")
+                        
+                        r.incr(process_counter_key)  # 处理计数加一
+
                         # socketio.emit('result', {'text1': result,  'sender': 'bot', 'text2':input_data, 'sender2': 'me'})
                         # 拼接输入和输出字符串，并一起存入 Redis
                         history_entry = f"input:{input_data}, output:{result}"
@@ -131,14 +145,14 @@ def process_data_schedule(instant_reply):
                 else:
                     error_entry = f"输入已达上限（100个），无法继续处理。如需帮助，请联系管理员。"
                     r.lpush(result_key, error_entry)
-        if not instant_reply and (i+1) % 25 == 0:
+        if not instant_reply and int(r.get(process_counter_key)) % 25 == 0:
             response = requests.get('http://localhost:5000/api/limit_warning')
             if time_count < 180*60:
                 time.sleep(180*60 - time_count)
                 time_count = 0
         else:
             time.sleep(5)
-        logger.info(msg=f"第{i+1}次循环结束")
+        # logger.info(msg=f"第{i+1}次循环结束")
         logger.info(msg=f'进程id: {os.getpid()}')
     logger.info("退出 process_data_schedule 函数")
     
