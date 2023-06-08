@@ -145,7 +145,7 @@ def process_data_schedule(instant_reply):
                 else:
                     error_entry = f"输入已达上限（100个），无法继续处理。如需帮助，请联系管理员。"
                     r.lpush(result_key, error_entry)
-        if not instant_reply and int(r.get(process_counter_key)) % 25 == 0:
+        if not instant_reply and int(r.get(process_counter_key)) != 0 and int(r.get(process_counter_key)) % 25 == 0:
             response = requests.get('http://localhost:5000/api/limit_warning')
             if time_count < 180*60:
                 time.sleep(180*60 - time_count)
