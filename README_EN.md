@@ -9,6 +9,8 @@ This project aims to create a platform that allows users who cannot directly use
 
 Demo address: [Registration and Login System --- Registration and Login System](https://share.liuweiqing.top/)(true gpt4) Because I may be debugging, sometimes I cannot access it.
 
+telegram group：https://t.me/+tkxAZJNrwIpjYTk1
+
 If necessary, I will release a video to explain the code in detail.
 
 Interface display:

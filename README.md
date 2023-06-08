@@ -9,6 +9,8 @@
 
 演示地址：[Registration and Login System --- 注册和登录系统](https://share.liuweiqing.top/)(这是真的gpt4)由于我可能会调试，所以有时无法访问。
 
+tg交流群：https://t.me/+tkxAZJNrwIpjYTk1
+
 如果有需要的话，我会出一期视频详细讲解代码。
 
 界面展示：
