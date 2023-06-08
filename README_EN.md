@@ -62,7 +62,7 @@ Welcome to the Nighttime Wisdom Star app. Here are the steps on how to install a
     The system will prompt you to enter the corresponding environment variables, please follow the prompts.
 
 4. Wait for Docker Compose to pull the required images and start the service, this may take some time depending on your network speed and machine performance.
-5. When all services are started, you can use the Nighttime Wisdom Star application by visiting [http://vpsIP:5001](http://vpsIP:5001) through a browser.
+5. When all services are started, you can use the Nighttime Wisdom Star application by visiting [http://vpsIP:2345](http://vpsIP:2345) through a browser.
 
 ## FQA
 
