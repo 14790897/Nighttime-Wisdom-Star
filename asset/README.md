@@ -64,12 +64,7 @@ GPT-4 的免费使用额度限制为每三小时最多25条请求。由于账号
    系统会提示你输入相应环境变量，请按照提示操作。
 
 4. 等待 Docker Compose 拉取所需的镜像并启动服务，这可能需要一些时间，具体取决于你的网络速度和机器性能。
-
 5. 当所有服务都启动后，你就可以通过浏览器访问 [http://vps的IP:2345](http://vps的IP:2345) 来使用 Nighttime Wisdom Star 应用了。
-
-   ### 恭喜你，大功告成
-
-   接下来可以根据需求，进行nginx配置，可以使用域名访问（本教程就不教了），也可以IP:端口（端口是5000）直接访问。
 
 ## FQA
 
@@ -92,16 +87,141 @@ GPT-4 的免费使用额度限制为每三小时最多25条请求。由于账号
    ```
 
    ```bash
-   docker-compose up -d
+   docker-compose up
    ```
 
    如果你在使用过程中遇到任何问题，或者有任何建议，欢迎提issue。
 
 ### 谢谢！
 
+---
 
+***
 
+***
 
+## 使用方法（旧版，复杂，不建议使用，适合不会用docker的用户，但目前还不完善） 
+
+将.env.template修改为.env并填入相应参数，SECRET_KEY可以随意生成，URL为自己的服务器Pandora项目域名，或者不会配置域名，用运行的Pandora项目的IP:端口替换也可以。
+
+### 简化步骤(这个脚本还没完成)：
+
+```
+chmod +x script.sh
+./script.sh
+```
+
+### 具体步骤：
+
+#### 安装我的项目
+
+假设你的vps是Ubuntu系统，
+
+在/home/ubuntu目录（目录随意，但注意要在同一目录下进行操作），下载我的GitHub项目
+
+```
+git clone https://github.com/14790897/Nighttime-Wisdom-Star.git
+```
+
+修改app.py中的`host=redis_host`(请用搜索功能找到这一行)为`host='localhost'`
+
+```
+sudo -i
+```
+
+输入以下命令
+
+```
+pip install -r requirements.txt
+```
+
+```
+vim /etc/systemd/system/myapp.service
+```
+
+按i进入插入模式，复制以下内容，ctrl+shift+v粘贴，这样可以使项目后台运行
+
+```
+[Unit]
+Description=My Python App
+After=network.target
+
+[Service]
+User=ubuntu
+WorkingDirectory=/home/ubuntu/app
+ExecStart=/usr/local/bin/gunicorn --bind 0.0.0.0:5000 app:app
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+```
+
+按下esc，输入:wq回车，保存并退出编辑器
+
+开始运行命令
+
+```
+systemctl start myapp
+```
+
+命令行输入以下命令，使其开机自启动
+
+```
+systemctl enable myapp
+```
+
+#### 安装Pandora
+
+下载Pandora项目
+
+```
+git clone https://github.com/pengzhile/pandora.git
+```
+
+然后使项目后台运行
+
+```
+vim /etc/systemd/system/pandora.service
+```
+
+和之前一样，将以下内容复制进去
+
+```
+[Unit]
+Description=Pandora Service
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/pandora -t t.json -s 0.0.0.0:8008
+Restart=always
+# 需要根据实际路径替换
+WorkingDirectory=/home/ubuntu
+
+[Install]
+WantedBy=multi-user.target
+```
+
+开始运行命令
+
+```
+systemctl start myapp
+```
+
+开机启动命令
+
+```
+systemctl enable myapp
+```
+
+在/home/ubuntu目录下创建t.json文件，输入https://chat.openai.com/api/auth/session破解得到的账号access token。
+
+#### 安装redis数据库。
+
+省略...
+
+### 恭喜你，大功告成
+
+接下来可以根据需求，进行nginx配置，可以使用域名访问（本教程就不教了），也可以IP:端口（端口是5000）直接访问。
 
 
 
