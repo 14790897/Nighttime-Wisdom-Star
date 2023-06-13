@@ -45,10 +45,10 @@ try:
     load_dotenv()  # 加载 .env 文件
     url = os.environ.get('URL')
     secret_key = os.environ.get('SECRET_KEY')
+    redis_host = os.getenv('REDIS_HOST', 'localhost')
 except Exception as e:
     logger.info(f"Error while loading .env file: {e}")
     exit(1)
-redis_host = os.getenv('REDIS_HOST', 'localhost')
 try:
     r = redis.StrictRedis(
         host=redis_host,#'redis','localhost'
@@ -83,7 +83,7 @@ def process_data_schedule(instant_reply):
     remain_counts_key = "remain_counts"  # 新建剩余次数键6.6
     r.set(remain_counts_key, int(os.environ.get('amount')))  # 初始化剩余次数6.6
 
-    # for i in range(int(os.environ.get('amount'))):  # 每三小时执行20次，共60条左右的用户信息
+    # for i in range(int(os.environ.get('amount'))):  # 每三小时执行25次，共75条左右的用户信息
     while int(r.get(remain_counts_key)) > 0:  # 当剩余次数大于0时，继续执行
         if not instant_reply:
             # sleep_time = random.uniform(2 * 60, 180 * 60 / 20)

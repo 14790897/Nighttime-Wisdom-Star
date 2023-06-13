@@ -1,4 +1,4 @@
-# [Nighttime-Wisdom-Star](https://github.com/14790897/Nighttime-Wisdom-Star/tree/main)
+# [Nighttime-Wisdom-Star](https://github.com/14790897/Nighttime-Wisdom-Star)
 
 [ENGLISH](README_EN.md)
 
@@ -36,7 +36,7 @@ Welcome to the Nighttime Wisdom Star app. Here are the steps on how to install a
    Command:
 
    ```bash
-   wget https://github.com/14790897/Nighttime-Wisdom-Star/raw/main/install_docker_and_compose_ubuntu.sh
+   wget https://github.com/14790897/Nighttime-Wisdom-Star/new-branch/main/install_docker_and_compose_ubuntu.sh
    ```
 
    centos download install_docker_and_compose_centos.sh file
@@ -44,7 +44,7 @@ Welcome to the Nighttime Wisdom Star app. Here are the steps on how to install a
    Command:
 
    ```bash
-   wget https://github.com/14790897/Nighttime-Wisdom-Star/raw/main/install_docker_and_compose_centos.sh
+   wget https://github.com/14790897/Nighttime-Wisdom-Star/new-branch/main/install_docker_and_compose_centos.sh
    ```
 
 3. Run the following command:
