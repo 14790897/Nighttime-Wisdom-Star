@@ -36,7 +36,7 @@ GPT-4 的免费使用额度限制为每三小时最多25条请求。由于账号
    指令：
 
    ```bash
-   wget https://github.com/14790897/Nighttime-Wisdom-Star/new-branch/main/install_docker_and_compose_ubuntu.sh
+   wget https://raw.githubusercontent.com/14790897/Nighttime-Wisdom-Star/new-branch/install_docker_and_compose_ubuntu.sh
    ```
 
    centos下载install_docker_and_compose_centos.sh文件
@@ -44,7 +44,7 @@ GPT-4 的免费使用额度限制为每三小时最多25条请求。由于账号
    指令：
 
    ```bash
-   wget https://github.com/14790897/Nighttime-Wisdom-Star/new-branch/main/install_docker_and_compose_centos.sh
+   wget https://raw.githubusercontent.com/14790897/Nighttime-Wisdom-Star/new-branch/install_docker_and_compose_centos.sh
    ```
 
 3. 运行以下命令：
