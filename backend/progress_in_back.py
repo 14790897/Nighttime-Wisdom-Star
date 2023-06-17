@@ -86,6 +86,7 @@ def process_data_schedule(instant_reply):
     # for i in range(int(os.environ.get('amount'))):  # 每三小时执行25次，共75条左右的用户信息
     while int(r.get(remain_counts_key)) > 0:  # 当剩余次数大于0时，继续执行
         if not instant_reply:
+            # todo 这里加个可以选择休息时间的选项6.16
             sleep_time = random.uniform(2 * 60, 180 * 60 / 20)
             #将睡眠时间变短 6.7
             # sleep_time = 10

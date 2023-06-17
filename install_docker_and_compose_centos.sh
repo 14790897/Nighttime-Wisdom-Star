@@ -55,7 +55,7 @@ read ENV
 if [ -z "$ENV" ]; then
   ENV=$ENV_old
 fi
-sed -i "s|ENV=.*|ENV='$ENV'|g" .env
+sed -i "s|ENV=.*|ENV=$ENV|g" .env
 
 # Access Token
 echo "PANDORA_ACCESS_TOKEN (Get it from: https://chat.openai.com/api/auth/session):"
@@ -94,7 +94,7 @@ read time_zone
 if [ -z "$time_zone" ]; then
   time_zone=$time_zone_old
 fi
-sed -i "s#time_zone=.*#time_zone='$time_zone'#g" .env
+sed -i "s#time_zone=.*#time_zone=$time_zone#g" .env
 
 echo "Environment variables set successfully!"
 
