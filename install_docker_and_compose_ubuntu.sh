@@ -95,7 +95,7 @@ sed -i "s|end_time=.*|end_time=$end_time|g" .env
 echo "Number of issues processed daily:"
 read amount
 if [ -z "$amount" ]; then
-  amount=$amount_old
+  amount=$amount_old  
 fi
 sed -i "s|amount=.*|amount=$amount|g" .env
 
