@@ -40,7 +40,7 @@ GPT-4 的免费使用额度限制为每三小时最多25条请求。由于账号
    bash install_docker_and_compose_ubuntu.sh
    ```
 
-   centos下载install_docker_and_compose_centos.sh文件
+   centos下载并运行install_docker_and_compose_centos.sh文件
 
    指令：
 
