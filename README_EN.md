@@ -31,12 +31,12 @@ Welcome to the Nighttime Wisdom Star app. Here are the steps on how to install a
 
 1. Enter the sudo mode of your vps
 
-2. Ubuntu download the install_docker_and_compose_ubuntu.sh file.
+2. Ubuntu download and run the install_docker_and_compose_ubuntu.sh file.
 
    Command:
 
    ```bash
-   wget https://raw.githubusercontent.com/14790897/Nighttime-Wisdom-Star/new-branch/install_docker_and_compose_ubuntu.sh
+   wget -O - https://raw.githubusercontent.com/14790897/Nighttime-Wisdom-Star/new-branch/install_docker_and_compose_ubuntu.sh | bash
    ```
 
    centos download install_docker_and_compose_centos.sh file
@@ -44,32 +44,17 @@ Welcome to the Nighttime Wisdom Star app. Here are the steps on how to install a
    Command:
 
    ```bash
-   wget https://raw.githubusercontent.com/14790897/Nighttime-Wisdom-Star/new-branch/install_docker_and_compose_centos.sh
+   wget -O - https://raw.githubusercontent.com/14790897/Nighttime-Wisdom-Star/new-branch/install_docker_and_compose_centos.sh | bash
    ```
+   You will be prompted to enter the appropriate environment variables, please follow the instructions.
 
-3. Run the following command:
+3. Wait for Docker Compose to pull the required images and start the services, this may take some time depending on your network speed and machine performance.
 
-   ubuntu.
-
-   ```bash
-   . install_docker_and_compose_ubuntu.sh
-   ```
-
-   centos.
-
-   ```bash
-   . install_docker_and_compose_centos.sh
-   ```
-
-   You will be prompted to enter the appropriate environment variables, so follow the prompts.
-
-4. Wait for Docker Compose to pull the required images and start the services, this may take some time depending on your network speed and machine performance.
-
-5. Once all services are started, you can access [http://vps的IP:2345](http://vps的IP:2345) to use the Nighttime Wisdom Star application via your browser.
+4. Once all the services are started, you can access [http://vps的IP:2345](http://vps的IP:2345) via your browser to use the Nighttime Wisdom Star application.
 
    ### Congratulations, great job!
 
-   Next, you can configure nginx as required, either using domain access (which is not taught in this tutorial) or IP:port (port is 5000) for direct access.
+   Next, you can configure nginx according to your needs, either using domain access (which is not taught in this tutorial) or IP:port (port is 5000) for direct access.
 
 ## FQA
 
@@ -78,14 +63,14 @@ Welcome to the Nighttime Wisdom Star app. Here are the steps on how to install a
    Run the following command:
 
    ```bash
-   docker-compose exec redis sh
+   docker-compose exec redis bash
    ```
 
    Enter ``redis-cli``, enter the database, and then please ask ChatGPT how to view the data of redis.
 
-2. how to modify the runtime, total answer count, etc. again?
+2. How to modify environment variables such as runtime, total answer count again?
 
-   Modify the corresponding values in the .env file, and run the following command to update it when you are done:
+   Modify the corresponding values in the .env file directly, and run the following command to update them when you are done:
 
    ```bash
    docker-compose down
@@ -94,7 +79,8 @@ Welcome to the Nighttime Wisdom Star app. Here are the steps on how to install a
    ```bash
    docker-compose up -d
    ```
+3. hidden automation function, just create a key 'username:data' in redis, put the question you want to ask into the list corresponding to this key, the program will be able to recognize it!
 
-   If you encounter any problems with it, or have any suggestions, feel free to raise an issue.
+   If you encounter any problems in the process of using, or have any suggestions, please feel free to raise an issue.
 
 ### Thanks!

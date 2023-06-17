@@ -31,12 +31,12 @@ GPT-4 的免费使用额度限制为每三小时最多25条请求。由于账号
 
 1. 进入vps的sudo模式
 
-2. Ubuntu下载install_docker_and_compose_ubuntu.sh文件，
+2. Ubuntu下载并运行install_docker_and_compose_ubuntu.sh文件，
 
    指令：
 
    ```bash
-   wget https://raw.githubusercontent.com/14790897/Nighttime-Wisdom-Star/new-branch/install_docker_and_compose_ubuntu.sh
+   wget -O - https://raw.githubusercontent.com/14790897/Nighttime-Wisdom-Star/new-branch/install_docker_and_compose_ubuntu.sh | bash
    ```
 
    centos下载install_docker_and_compose_centos.sh文件
@@ -44,28 +44,13 @@ GPT-4 的免费使用额度限制为每三小时最多25条请求。由于账号
    指令：
 
    ```bash
-   wget https://raw.githubusercontent.com/14790897/Nighttime-Wisdom-Star/new-branch/install_docker_and_compose_centos.sh
+   wget -O - https://raw.githubusercontent.com/14790897/Nighttime-Wisdom-Star/new-branch/install_docker_and_compose_centos.sh | bash
    ```
-
-3. 运行以下命令：
-
-   ubuntu:
-
-   ```bash
-   . install_docker_and_compose_ubuntu.sh
-   ```
-
-   centos:
-
-   ```bash
-   . install_docker_and_compose_centos.sh
-   ```
-
    系统会提示你输入相应环境变量，请按照提示操作。
 
-4. 等待 Docker Compose 拉取所需的镜像并启动服务，这可能需要一些时间，具体取决于你的网络速度和机器性能。
+3. 等待 Docker Compose 拉取所需的镜像并启动服务，这可能需要一些时间，具体取决于你的网络速度和机器性能。
 
-5. 当所有服务都启动后，你就可以通过浏览器访问 [http://vps的IP:2345](http://vps的IP:2345) 来使用 Nighttime Wisdom Star 应用了。
+4. 当所有服务都启动后，你就可以通过浏览器访问 [http://vps的IP:2345](http://vps的IP:2345) 来使用 Nighttime Wisdom Star 应用了。
 
    ### 恭喜你，大功告成
 
@@ -78,14 +63,14 @@ GPT-4 的免费使用额度限制为每三小时最多25条请求。由于账号
    运行以下命令：
 
    ```bash
-   docker-compose exec redis sh
+   docker-compose exec redis bash
    ```
 
    输入`redis-cli`，进入数据库，然后请请教ChatGPT如何查看redis的数据。
 
-2. 如何再次修改运行时间，总回答次数等？
+2. 如何再次修改运行时间，总回答次数等环境变量？
 
-   修改.env文件中对应的值，完成后运行以下命令更新：
+   直接修改.env文件中对应的值，完成后运行以下命令更新：
 
    ```bash
    docker-compose down
@@ -94,6 +79,7 @@ GPT-4 的免费使用额度限制为每三小时最多25条请求。由于账号
    ```bash
    docker-compose up -d
    ```
+3. 隐藏的自动化功能，只要在redis中任意创建一个键'用户名:data'，将你想要提问的问题放入此键对应的列表，程序就能识别了
 
    如果你在使用过程中遇到任何问题，或者有任何建议，欢迎提issue。
 
