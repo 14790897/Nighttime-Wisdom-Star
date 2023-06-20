@@ -63,7 +63,7 @@ except Exception as e:
 ask_chatgpt = AskChatGPT(url)
 
 def process_data_schedule(instant_reply):
-    logger.info(f"process_data_schedule 函数被调用，instant_reply = {instant_reply}")
+    # logger.info(f"process_data_schedule 函数被调用，instant_reply = {instant_reply}")
     # logging.info("进入 process_data_schedule 函数")
     current_hour = datetime.now(pytz.timezone(os.environ.get('time_zone'))).hour
     start_time = int(os.environ.get('start_time'))
@@ -154,7 +154,7 @@ def process_data_schedule(instant_reply):
         else:
             time.sleep(5)
         # logger.info(msg=f"第{i+1}次循环结束")
-        logger.info(msg=f'进程id: {os.getpid()}')
+        # logger.info(msg=f'进程id: {os.getpid()}')
     logger.info("退出 process_data_schedule 函数")
     
 def process_loop(instant_reply):
@@ -170,7 +170,7 @@ def call_api_with_retry(api_function, max_retries=5):
                 sleep_time = (2 ** i) + random.random()  # 指数退避 + 随机化
                 time.sleep(sleep_time)
             else:
-                raise
+                logger.info(f"请求ChatGPT过程中出现异常:{Exception}")
 
 if __name__ == '__main__':
     instant_reply = os.environ.get("ENV") == "development"
