@@ -21,6 +21,10 @@ services:
       - end_time=${end_time}
       - amount=${amount}
       - time_zone=${time_zone}
+    volumes:
+      - ./output.log:/output.log
+      - ./output_process.log:/output_process.log
+
 
   redis:
     image: redis:latest
