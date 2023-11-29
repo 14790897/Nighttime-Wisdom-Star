@@ -25,3 +25,5 @@ frontend/*.sw?
 ~.pub
 
 2next示例.py
+.env
+# example
