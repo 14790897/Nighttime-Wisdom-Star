@@ -9,21 +9,22 @@ import logging
 
 from dotenv import load_dotenv
 
-#不能删除此程序新建的对话，因为会话id在此程序运行过程中会一直保留，
+
+# 不能删除此程序新建的对话，因为会话id在此程序运行过程中会一直保留，
 # 如果删除了，会话id就无法找到（新会话conversation_id应为none），造成错误
 class AskChatGPT:
-
     def __init__(self, url):
         self.session = None
         self.parent_message_id = None
         self.url = url
 
     def process_data(
-            self,
-            prompt,
-            stop=None,
-            conversation_id=None,
-            parent_message_id=None, ):
+        self,
+        prompt,
+        stop=None,
+        conversation_id=None,
+        parent_message_id=None,
+    ):
         # if stop is not None:
         #     raise ValueError("stop kwargs are not permitted.")
         # 将 ask_chatgpt 的逻辑放在这里
@@ -46,22 +47,28 @@ class AskChatGPT:
             "stream": False,
             "conversation_id": conversation_id,
         }
-        response = requests.post(f"{self.url}/api/conversation/talk", json=data)
+        response = requests.post(
+            f"{self.url}/api/conversation", json=data, headers=headers
+        )
         if response.status_code not in range(200, 300):
-            logging.error(f"API call failed with status {response.status_code}: {response.text}")
+            logging.error(
+                f"API call failed with status {response.status_code}: {response.text}"
+            )
             return json.dumps({"error": f"API call failed: {response.text}"})
         try:
             response_data = response.text
-            response_data=json.loads(response_data)  # 尝试解析数据
-            parts = response_data['message']['content']['parts']
+            response_data = json.loads(response_data)  # 尝试解析数据
+            parts = response_data["message"]["content"]["parts"]
         except json.JSONDecodeError:
             logging.error(f"Invalid JSON data: {response_data}")
-            response_data = json.dumps({"error": "Invalid data received, Jsondecodererror"})  # 创建一个错误的 JSON 响应
+            response_data = json.dumps(
+                {"error": "Invalid data received, Jsondecodererror"}
+            )  # 创建一个错误的 JSON 响应
         except TypeError:
             logging.error(f"Invalid JSON data: {response_data}")
             response_data = json.dumps({"error": "Invalid data received, type error"})
         # 将 parts 中的字符串连接起来形成完整的回复
-        response_message = ''.join(parts)
+        response_message = "".join(parts)
         if stop:
             for stop_value in stop:
                 stop_index = response_message.find(stop_value)
@@ -71,12 +78,15 @@ class AskChatGPT:
         if self.session is None:
             self.session = response_data["conversation_id"]  # 如果一开始传入的id为none，这里需要更新id
         # 更新 parent_message_id
-        self.parent_message_id = response_data["message"]['id']
+        self.parent_message_id = response_data["message"]["id"]
         return response_message
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     load_dotenv()  # 加载 .env 文件
-    url = os.environ.get('URL')
+    token = os.environ.get("token")
+    headers = {"Authorization": "Bearer " + token}
+    url = os.environ.get("URL")
     ask_chatgpt = AskChatGPT(url)
     while True:
         input_data = input("请输入：")
