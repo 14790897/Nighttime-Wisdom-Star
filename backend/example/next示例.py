@@ -21,7 +21,7 @@ class AskChatGPT:
 
     def pre_process(self, data_lines):
         parsed_data_list = []  # 用于存储解析后的数据
-        
+
         # 将单个字符串分割为多行
         lines = data_lines.splitlines()
         for line in lines:
@@ -41,6 +41,7 @@ class AskChatGPT:
 
         # 检查列表是否有足够的数据
         if len(parsed_data_list) >= 3:
+            print("返回的完整数据：", parsed_data_list[-3])
             return parsed_data_list[-3]  # 返回倒数第三个元素
         else:
             return None  # 没有足够的数据返回 None
@@ -77,7 +78,7 @@ class AskChatGPT:
             "action": "next",
             "messages": [
                 {
-                    "id": "aaa243c4-799e-4340-b17a-fb378626cbed",
+                    "id": message_id,
                     "author": {"role": "user"},
                     "content": {"content_type": "text", "parts": [prompt]},
                     "metadata": {},
@@ -105,7 +106,7 @@ class AskChatGPT:
             )
             return json.dumps({"error": f"API call failed: {response.text}"})
         try:
-            response_data = self.pre_process(response.text) #新的预处理
+            response_data = self.pre_process(response.text)  # 新的预处理
             # response_data = json.loads(response_data)  # 尝试解析数据
             parts = response_data["message"]["content"]["parts"]
         except json.JSONDecodeError:
