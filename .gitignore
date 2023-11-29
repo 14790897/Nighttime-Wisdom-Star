@@ -23,3 +23,5 @@ frontend/*.sw?
 .history
 ~
 ~.pub
+
+2next示例.py
