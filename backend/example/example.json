@@ -1,0 +1,36 @@
+{
+    "message": {
+        "id": "232ec760-b1aa-42dc-b1a3-8adb01692215",
+        "author": {
+            "role": "assistant",
+            "name": null,
+            "metadata": {}
+        },
+        "create_time": 1701259993.793608,
+        "update_time": null,
+        "content": {
+            "content_type": "text",
+            "parts": [
+                "It's nice to hear from you again! How can I assist you today? If you have any questions or need information, feel free to ask."
+            ]
+        },
+        "status": "finished_successfully",
+        "end_turn": true,
+        "weight": 1.0,
+        "metadata": {
+            "finish_details": {
+                "type": "stop",
+                "stop_tokens": [
+                    100260
+                ]
+            },
+            "is_complete": true,
+            "message_type": "next",
+            "model_slug": "text-davinci-002-render-sha",
+            "parent_id": "62a95615-9a68-449a-9bf2-304bbc8a1947"
+        },
+        "recipient": "all"
+    },
+    "conversation_id": "d5f0711b-7aaa-4ded-8fdb-1d1c88e8939d",
+    "error": null
+}
