@@ -58,6 +58,7 @@
         }
         else{
           this.$http.post('/api/home', {
+            withCredentials: true,
             input_data: this.newMessage,
           }, //{
             //headers: {
