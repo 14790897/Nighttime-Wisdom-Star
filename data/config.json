@@ -1,0 +1,28 @@
+{
+  "bind": "0.0.0.0:8181",
+  "tls": {
+    "enabled": false,
+    "cert_file": "",
+    "key_file": ""
+  },
+  "timeout": 600,
+  "proxy_url": "",
+  "license_id": "",
+  "public_share": false,
+  "site_password": "",
+  "setup_password": "",
+  "server_tokens": true,
+  "server_mode": "proxy",
+  "proxy_api_prefix": "",
+  "isolated_conv_title": "*",
+  "captcha": {
+    "provider": "",
+    "site_key": "",
+    "site_secret": "",
+    "site_login": false,
+    "setup_login": false,
+    "oai_username": false,
+    "oai_password": false
+  },
+  "whitelist": null
+}

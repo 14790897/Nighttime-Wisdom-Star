@@ -136,7 +136,7 @@ class AskChatGPT:
 
 if __name__ == "__main__":
     load_dotenv()  # 加载 .env 文件
-    token = os.environ.get("token")
+    token = os.environ.get("PANDORA_ACCESS_TOKEN")
     headers = {"Content-Type": "application/json", "Authorization": "Bearer " + token}
     url = os.environ.get("URL")
     ask_chatgpt = AskChatGPT(url, headers)

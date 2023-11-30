@@ -1,19 +1,18 @@
-version: '3.7'
+version: "3.7"
 
 services:
   frontend:
-
     image: 14790897/frontend_nighttime-wisdom-star:latest
     ports:
       - "2345:80"
-    depends_on: 
+    depends_on:
       - backend
 
   backend:
     image: 14790897/backend_nighttime-wisdom-star:latest
     ports:
       - "5000:5000"
-    depends_on: 
+    depends_on:
       - redis
     environment:
       - ENV=${ENV}
@@ -25,7 +24,6 @@ services:
       - ./output.log:/output.log
       - ./output_process.log:/output_process.log
 
-
   redis:
     image: redis:latest
     volumes:
@@ -33,15 +31,25 @@ services:
     expose:
       - "6379"
 
-
-  pandora:
-    image: pengzhile/pandora
-    # pull_policy: if_not_present
-    environment:
-      - PANDORA_SERVER=${PANDORA_SERVER}
-      - PANDORA_ACCESS_TOKEN=${PANDORA_ACCESS_TOKEN}
-    expose:
-      - "8008"
+  # pandora:
+  #   image: pengzhile/pandora
+  #   # pull_policy: if_not_present
+  #   environment:
+  #     - PANDORA_SERVER=${PANDORA_SERVER}
+  #     - PANDORA_ACCESS_TOKEN=${PANDORA_ACCESS_TOKEN}
+  #   expose:
+  #     - "8008"
 
     # ports:
     #   - "8008:8008"
+
+  pandora-next:
+    image: pengzhile/pandora-next
+    container_name: PandoraNext
+    network_mode: bridge
+    restart: always
+    ports:
+      - "8181:8181"
+    volumes:
+      - ./data:/data
+      - ./sessions:/root/.cache/PandoraNext
