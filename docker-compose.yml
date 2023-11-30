@@ -4,14 +4,14 @@ services:
   frontend:
     image: 14790897/frontend_nighttime-wisdom-star:latest
     ports:
-      - "2345:80"
+      - "3456:80"
     depends_on:
       - backend
 
   backend:
     image: 14790897/backend_nighttime-wisdom-star:latest
     ports:
-      - "5000:5000"
+      - "5001:5000"
     depends_on:
       - redis
     environment:
@@ -20,6 +20,9 @@ services:
       - end_time=${end_time}
       - amount=${amount}
       - time_zone=${time_zone}
+      - PANDORA_ACCESS_TOKEN=${PANDORA_ACCESS_TOKEN}
+      - URL=${URL}
+      - SECRET_KEY=${SECRET_KEY}
     volumes:
       - ./output.log:/output.log
       - ./output_process.log:/output_process.log

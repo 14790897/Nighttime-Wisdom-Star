@@ -44,7 +44,7 @@ instant_reply = False
 try:
     load_dotenv()  # 加载 .env 文件
     url = os.environ.get("URL")
-    secret_key = os.environ.get("SECRET_KEY")
+    # secret_key = os.environ.get("SECRET_KEY")
     redis_host = os.getenv("REDIS_HOST", "localhost")
 except Exception as e:
     logger.info(f"Error while loading .env file: {e}")
