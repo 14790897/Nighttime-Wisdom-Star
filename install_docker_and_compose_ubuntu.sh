@@ -1,36 +1,54 @@
 #!/bin/bash
 
-# 卸载旧版本Docker
-sudo apt-get remove -y docker docker-engine docker.io containerd runc
+# 检查 Docker 是否已安装
+if ! command -v docker &> /dev/null
+then
+    echo "Docker 未安装，开始安装 Docker..."
 
-# 更新apt包索引
-sudo apt-get update -y
+    # 卸载旧版本 Docker
+    sudo apt-get remove -y docker docker-engine docker.io containerd runc
 
-# 安装依赖以使APT可以通过HTTPS来获取包
-sudo apt-get install -y \
-    apt-transport-https \
-    ca-certificates \
-    curl \
-    gnupg \
-    lsb-release
+    # 更新 apt 包索引
+    sudo apt-get update -y
 
-# 添加Docker的官方GPG密钥
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+    # 安装依赖以使 APT 可以通过 HTTPS 获取包
+    sudo apt-get install -y \
+        apt-transport-https \
+        ca-certificates \
+        curl \
+        gnupg \
+        lsb-release
 
-# 设置稳定版仓库
-echo \
-  "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
-  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    # 添加 Docker 的官方 GPG 密钥
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 
-# 更新apt包索引，然后安装最新版本的Docker Engine和containerd
-sudo apt-get update -y
-sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+    # 设置稳定版仓库
+    echo \
+    "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+    $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-# 安装docker-compose
-sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
+    # 更新 apt 包索引，然后安装最新版本的 Docker Engine 和 containerd
+    sudo apt-get update -y
+    sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 
-echo "Docker and Docker Compose installed successfully!"
+    echo "Docker 已成功安装！"
+else
+    echo "Docker 已安装，跳过..."
+fi
+
+# 检查 Docker Compose 是否已安装
+if ! command -v docker-compose &> /dev/null
+then
+    echo "Docker Compose 未安装，开始安装 Docker Compose..."
+
+    # 安装 Docker Compose
+    sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    sudo chmod +x /usr/local/bin/docker-compose
+
+    echo "Docker Compose 已成功安装！"
+else
+    echo "Docker Compose 已安装，跳过..."
+fi
 
 # URL of the files to be downloaded
 url1='https://raw.githubusercontent.com/14790897/Nighttime-Wisdom-Star/new-branch/docker-compose.yml'
