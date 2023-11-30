@@ -59,7 +59,7 @@ except Exception as e:
     # 创建一个AskChatGPT对象
 token = os.environ.get("PANDORA_ACCESS_TOKEN")
 headers = {"Content-Type": "application/json", "Authorization": "Bearer " + token}
-ask_chatgpt = AskChatGPT(url)
+ask_chatgpt = AskChatGPT(url, headers)
 
 
 def process_data_schedule(instant_reply):

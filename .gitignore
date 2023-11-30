@@ -26,4 +26,5 @@ frontend/*.sw?
 
 2next示例.py
 .env
+venv
 # example
