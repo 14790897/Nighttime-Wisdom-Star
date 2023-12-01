@@ -3,6 +3,7 @@ version: "3.7"
 services:
   frontend:
     image: 14790897/frontend_nighttime-wisdom-star:latest
+    restart: always
     ports:
       - "2345:80"
     depends_on:
@@ -10,6 +11,7 @@ services:
 
   backend:
     image: 14790897/backend_nighttime-wisdom-star:latest
+    restart: always
     ports:
       - "5000:5000"
     depends_on:
@@ -21,7 +23,6 @@ services:
       - amount=${amount}
       - time_zone=${time_zone}
       - PANDORA_ACCESS_TOKEN=${PANDORA_ACCESS_TOKEN}
-      - URL=${URL}
       - SECRET_KEY=${SECRET_KEY}
     volumes:
       - ./output.log:/output.log
@@ -37,7 +38,6 @@ services:
   pandora-next:
     image: pengzhile/pandora-next
     container_name: PandoraNext
-    network_mode: bridge
     restart: always
     ports:
       - "8181:8181"
