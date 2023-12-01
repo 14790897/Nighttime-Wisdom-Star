@@ -66,40 +66,27 @@ class AskChatGPT:
             # 默认为保存的conversation_id，也就是上一次会话，如果用户有输入，则为用户输入的id，不改变值
             conversation_id = self.session
         data = {
-            "action": "next",
-            "messages": [
-                {
-                    "id": message_id,
-                    "author": {"role": "user"},
-                    "content": {"content_type": "text", "parts": [prompt]},
-                    "metadata": {},
-                }
-            ],
-            "conversation_id": conversation_id,
-            "message_id": message_id,
-            "parent_message_id": parent_message_id,
             "model": model,
-            "timezone_offset_min": -480,
-            "suggestions": [],
-            "history_and_training_disabled": False,
-            "arkose_token": None,
-            "conversation_mode": {"kind": "primary_assistant"},
-            "force_paragen": False,
-            "force_rate_limit": False,
+            "messages": [
+                {"role": "user", "content": prompt},
+            ],
         }
 
         response = requests.post(
-            f"{self.url}/backend-api/conversation", json=data, headers=self.headers
+            f"{self.url}/v1/chat/completions", json=data, headers=self.headers
         )
+        # print("response", response)这个输出不了，要.text
         if response.status_code not in range(200, 300):
             logging.error(
                 f"API call failed with status {response.status_code}: {response.text}"
             )
             return json.dumps({"error": f"API call failed: {response.text}"})
         try:
-            response_data = self.pre_process(response.text)  # 新的预处理
-            # response_data = json.loads(response_data)  # 尝试解析数据
-            parts = response_data["message"]["content"]["parts"]
+            # response_data = self.pre_process(response.text)  # 新的预处理
+            response_data = response.text
+            response_data = json.loads(response_data)  # 尝试解析数据
+            # print("response_data", response_data)
+            parts = response_data["choices"][0]["message"]["content"]
         except json.JSONDecodeError:
             logging.error(f"Invalid JSON data: {response_data}")
             response_data = json.dumps(
@@ -118,10 +105,10 @@ class AskChatGPT:
                 if stop_index != -1:
                     response_message = response_message[:stop_index]
                     break
-        if self.session is None:
-            self.session = response_data["conversation_id"]  # 如果一开始传入的id为none，这里需要更新id
-        # 更新 parent_message_id
-        self.parent_message_id = response_data["message"]["id"]
+        # if self.session is None:
+        #     self.session = response_data["conversation_id"]  # 如果一开始传入的id为none，这里需要更新id
+        # # 更新 parent_message_id
+        # self.parent_message_id = response_data["message"]["id"]
         return response_message
 
 
