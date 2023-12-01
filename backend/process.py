@@ -4,7 +4,6 @@ import uuid
 import requests
 import json
 import time
-from typing import Any, List, Mapping, Optional
 import logging
 
 from dotenv import load_dotenv
@@ -66,14 +65,6 @@ class AskChatGPT:
         if conversation_id is None and self.session is not None:
             # 默认为保存的conversation_id，也就是上一次会话，如果用户有输入，则为用户输入的id，不改变值
             conversation_id = self.session
-        # {
-        #     "prompt": prompt,
-        #     "model": model,
-        #     "message_id": message_id,
-        #     "parent_message_id": parent_message_id,
-        #     "stream": False,
-        #     "conversation_id": conversation_id,
-        # }
         data = {
             "action": "next",
             "messages": [
@@ -87,7 +78,7 @@ class AskChatGPT:
             "conversation_id": conversation_id,
             "message_id": message_id,
             "parent_message_id": parent_message_id,
-            "model": "text-davinci-002-render-sha",
+            "model": model,
             "timezone_offset_min": -480,
             "suggestions": [],
             "history_and_training_disabled": False,
