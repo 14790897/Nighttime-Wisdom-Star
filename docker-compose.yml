@@ -34,18 +34,6 @@ services:
     expose:
       - "6379"
 
-  # pandora:
-  #   image: pengzhile/pandora
-  #   # pull_policy: if_not_present
-  #   environment:
-  #     - PANDORA_SERVER=${PANDORA_SERVER}
-  #     - PANDORA_ACCESS_TOKEN=${PANDORA_ACCESS_TOKEN}
-  #   expose:
-  #     - "8008"
-
-    # ports:
-    #   - "8008:8008"
-
   pandora-next:
     image: pengzhile/pandora-next
     container_name: PandoraNext
