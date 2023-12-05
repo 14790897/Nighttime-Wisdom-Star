@@ -3,7 +3,6 @@ version: "3.7"
 services:
   frontend:
     image: 14790897/frontend_nighttime-wisdom-star:latest
-    container_name: f
     restart: always
     ports:
       - "2345:80"
@@ -13,7 +12,6 @@ services:
   backend:
     image: 14790897/backend_nighttime-wisdom-star:latest
     restart: always
-    container_name: b
     ports:
       - "5000:5000"
     depends_on:
@@ -39,7 +37,7 @@ services:
 
   pandora-next:
     image: pengzhile/pandora-next
-    container_name: p
+    container_name: pandora-next
     restart: always
     ports:
       - "8181:8181"
