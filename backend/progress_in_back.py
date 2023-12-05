@@ -106,16 +106,20 @@ def process_data_schedule(instant_reply):
                 if processed_count < 200:
                     try:
                         logger.info(f"Input data: {input_data}")
-                        # # 读取列表的所有元素
-                        # all_items = r.lrange(result_key, 0, -1)
-                        # # 反转列表以获取时间顺序的数据（最早的数据在前）
-                        # all_items.reverse()
+                        # 读取列表的所有元素
+                        all_items = r.lrange(result_key, 0, -1)
+                        # 反转列表以获取时间顺序的数据（最早的数据在前）
+                        all_items.reverse()
 
-                        # # 拼接所有元素
-                        # combined_data = "".join(item.decode('utf-8') for item in all_items)
-                        # input_data = f'history:{combined_data}+user input:{input_data}'
+                        # 拼接所有元素
+                        combined_data = "".join(
+                            item.decode("utf-8") for item in all_items
+                        )
+                        input_data_with_history = (
+                            f"history:{combined_data}+user input:{input_data}"
+                        )
                         result = call_api_with_retry(
-                            lambda: ask_chatgpt.process_data(input_data)
+                            lambda: ask_chatgpt.process_data(input_data_with_history)
                         )
                         logger.info(f"Result: {result}")
 
@@ -154,7 +158,7 @@ def process_data_schedule(instant_reply):
                     except Exception as e:
                         logger.info(e)
                         # 给用户展示
-                        error_entry = f"I'm so sorry, there is an error. If you have any questions, please contact the administrator."
+                        error_entry = f"I'm so sorry, there is an error. If you have any questions, please contact the administrator.{str(e)}"
                         # 给管理员查看
                         error_message = f"There is an error: {str(e)}."
                         r.lpush(result_key, error_entry)

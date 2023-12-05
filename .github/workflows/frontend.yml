@@ -27,5 +27,7 @@ jobs:
           context: ./frontend
           file: ./frontend/dockerfile.frontend
           push: true
-          tags: 14790897/frontend_nighttime-wisdom-star:latest
+          tags: |
+            14790897/frontend_nighttime-wisdom-star:latest
+            14790897/frontend_nighttime-wisdom-star:${{ github.ref_name }}-${{ github.run_number }}
   

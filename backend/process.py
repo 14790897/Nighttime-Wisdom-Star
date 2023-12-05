@@ -71,7 +71,7 @@ class AskChatGPT:
                 {"role": "user", "content": prompt},
             ],
         }
-
+        print("data in process,应该带有历史记录", data)
         response = requests.post(
             f"{self.url}/v1/chat/completions", json=data, headers=self.headers
         )
