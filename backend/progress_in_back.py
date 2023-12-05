@@ -106,14 +106,14 @@ def process_data_schedule(instant_reply):
                 if processed_count < 100:
                     try:
                         logger.info(f"Input data: {input_data}")
-                        # 读取列表的所有元素
-                        all_items = r.lrange(result_key, 0, -1)
-                        # 反转列表以获取时间顺序的数据（最早的数据在前）
-                        all_items.reverse()
+                        # # 读取列表的所有元素
+                        # all_items = r.lrange(result_key, 0, -1)
+                        # # 反转列表以获取时间顺序的数据（最早的数据在前）
+                        # all_items.reverse()
 
-                        # 拼接所有元素
-                        combined_data = "".join(item.decode('utf-8') for item in all_items)
-                        input_data = f'history:{combined_data}+user input:{input_data}'
+                        # # 拼接所有元素
+                        # combined_data = "".join(item.decode('utf-8') for item in all_items)
+                        # input_data = f'history:{combined_data}+user input:{input_data}'
                         result = call_api_with_retry(
                             lambda: ask_chatgpt.process_data(input_data)
                         )
