@@ -113,7 +113,7 @@ def process_data_schedule(instant_reply):
 
                         # 拼接所有元素
                         combined_data = "".join(
-                            item.decode("utf-8") for item in all_items
+                            item for item in all_items
                         )
                         input_data_with_history = (
                             f"history:{combined_data}+user input:{input_data}"
