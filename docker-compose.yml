@@ -32,8 +32,8 @@ services:
     image: redis:latest
     volumes:
       - /mydata:/data
-    expose:
-      - "6379"
+    ports:
+      - "6379:6379"
 
   pandora-next:
     image: pengzhile/pandora-next

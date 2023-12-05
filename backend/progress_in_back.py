@@ -103,7 +103,7 @@ def process_data_schedule(instant_reply):
             # 获取当前用户已处理的输入数量
             processed_count = int(r.get(counter_key) or 0)
             if input_data:
-                if processed_count < 100:
+                if processed_count < 200:
                     try:
                         logger.info(f"Input data: {input_data}")
                         # # 读取列表的所有元素
