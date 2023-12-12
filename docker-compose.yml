@@ -24,6 +24,7 @@ services:
       - time_zone=${time_zone}
       - PANDORA_ACCESS_TOKEN=${PANDORA_ACCESS_TOKEN}
       - SECRET_KEY=${SECRET_KEY}
+      - ENABLE_WAIT_TIME=${ENABLE_WAIT_TIME}
     volumes:
       - ./output.log:/output.log
       - ./output_process.log:/output_process.log
