@@ -61,7 +61,7 @@ headers = {"Content-Type": "application/json", "Authorization": "Bearer " + toke
 ask_chatgpt = AskChatGPT(url, headers)
 
 
-def process_data_schedule(instant_reply):
+def process_data_schedule(instant_reply, enable_wait_time):
     # logger.info(f"process_data_schedule 函数被调用，instant_reply = {instant_reply}")
     # logging.info("进入 process_data_schedule 函数")
     current_hour = datetime.now(pytz.timezone(os.environ.get("time_zone"))).hour
@@ -85,13 +85,14 @@ def process_data_schedule(instant_reply):
     # for i in range(int(os.environ.get('amount'))):  # 每三小时执行25次，共75条左右的用户信息
     while int(r.get(remain_counts_key)) > 0:  # 当剩余次数大于0时，继续执行
         if not instant_reply:
-            # todo 这里加个可以选择休息时间的选项6.16
-            sleep_time = random.uniform(2 * 60, 180 * 60 / 20)
-            # 将睡眠时间变短 6.7
-            # sleep_time = 10
-            logger.info(f"sleep_time: {sleep_time}")
-            time.sleep(sleep_time)  # 随机间隔，不小于5分钟
-            time_count += sleep_time
+            if enable_wait_time:
+                # todo 这里加个可以选择休息时间的选项6.16
+                sleep_time = random.uniform(2 * 60, 180 * 60 / 20)
+                # 将睡眠时间变短 6.7
+                # sleep_time = 10
+                logger.info(f"sleep_time: {sleep_time}")
+                time.sleep(sleep_time)  # 随机间隔，不小于5分钟
+                time_count += sleep_time
         data_keys = r.keys(pattern="*:data")
         for data_key in data_keys:
             username = data_key[:-5]
@@ -112,9 +113,7 @@ def process_data_schedule(instant_reply):
                         all_items.reverse()
 
                         # 拼接所有元素
-                        combined_data = "".join(
-                            item for item in all_items
-                        )
+                        combined_data = "".join(item for item in all_items)
                         input_data_with_history = (
                             f"history:{combined_data}+user input:{input_data}"
                         )
@@ -172,9 +171,10 @@ def process_data_schedule(instant_reply):
             and int(r.get(process_counter_key)) % 25 == 0
         ):
             response = requests.get("http://localhost:5000/api/limit_warning")
-            if time_count < 180 * 60:
-                time.sleep(180 * 60 - time_count)
-                time_count = 0
+            if enable_wait_time:
+                if time_count < 180 * 60:
+                    time.sleep(180 * 60 - time_count)
+                    time_count = 0
         else:
             time.sleep(5)
         # logger.info(msg=f"第{i+1}次循环结束")
@@ -182,9 +182,9 @@ def process_data_schedule(instant_reply):
     logger.info("退出 process_data_schedule 函数")
 
 
-def process_loop(instant_reply):
+def process_loop(instant_reply, enable_wait_time):
     while True:
-        process_data_schedule(instant_reply)
+        process_data_schedule(instant_reply, enable_wait_time)
 
 
 def call_api_with_retry(api_function, max_retries=5):
@@ -196,10 +196,11 @@ def call_api_with_retry(api_function, max_retries=5):
                 sleep_time = (2**i) + random.random()  # 指数退避 + 随机化
                 time.sleep(sleep_time)
             else:
-                logger.info(f"请求ChatGPT过程中出现异常:{Exception}")
+                logger.info(f"请求ChatGPT过程中出现异常:{e}")
 
 
 if __name__ == "__main__":
     instant_reply = os.environ.get("ENV") == "development"
-    p = Process(target=process_loop, args=(instant_reply,))
+    enable_wait_time = os.environ.get("ENABLE_WAIT_TIME", "False") == "True"
+    p = Process(target=process_loop, args=(instant_reply, enable_wait_time))
     p.start()
