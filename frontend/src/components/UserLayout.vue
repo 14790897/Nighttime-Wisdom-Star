@@ -16,7 +16,8 @@
         </ul>
         <ul class="navbar-nav">
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
               <i class="fa fa-user"></i> {{ getUsername }}
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -54,6 +55,14 @@ export default {
       ],
     };
   },
+  created() {
+    // 从 localStorage 中读取语言设置
+    const savedLanguage = localStorage.getItem('language');
+    if (savedLanguage) {
+      this.selectedLanguage = savedLanguage;
+      this.$i18n.locale = savedLanguage;
+    }
+  },
   computed: {
     ...mapGetters([
       'getUsername'
@@ -64,6 +73,8 @@ export default {
       // 当用户选择一个新的语言时，你可以在这里改变你的语言设置
       // 例如，你可以调用 vue-i18n 的语言切换方法，或者更改你的页面上的文本等
       this.$i18n.locale = newLang;
+      // 将选择保存到 localStorage
+      localStorage.setItem('language', newLang);
     },
   },
 };
