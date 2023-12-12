@@ -114,7 +114,7 @@ def process_data_schedule(instant_reply, enable_wait_time):
 
                         # 拼接所有元素
                         combined_data = "".join(item for item in all_items)
-                        shortened_data = combined_data[-8000:]
+                        shortened_data = combined_data[-5000:]
                         input_data_with_history = (
                             f"history:{shortened_data}+user input:{input_data}"
                         )
