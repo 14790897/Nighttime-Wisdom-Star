@@ -33,9 +33,11 @@ services:
     image: redis:latest
     volumes:
       - /mydata:/data
+      - /redis.conf:/usr/local/etc/redis/redis.conf
+
     expose:
       - "6379"
-    command: redis-server --save 60 1000
+    command: redis-server /usr/local/etc/redis/redis.conf
 
 
   pandora-next:
