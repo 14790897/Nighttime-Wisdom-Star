@@ -1,9 +1,9 @@
-import { createStore } from 'vuex';
+import { createStore } from "vuex";
 
 export default createStore({
   state: {
-    csrfToken: '',
-    username: null,
+    csrfToken: "",
+    username: localStorage.getItem("username") || "",
   },
   mutations: {
     updateCsrfToken(state, csrfToken) {
@@ -11,6 +11,7 @@ export default createStore({
     },
     setUsername(state, username) {
       state.username = username;
+      localStorage.setItem("username", username);
     },
   },
   getters: {
@@ -19,5 +20,5 @@ export default createStore({
     },
   },
   actions: {},
-  modules: {}
+  modules: {},
 });

@@ -48,12 +48,12 @@ export default {
                     this.$router.push({ name: 'Home' });
                 } else {
                     // 显示登录失败的原因
-                    alert(this.$t('message.loginFailed') + ': ' + response.data.message);
+                    alert(this.$t('message.loginFailed1') + ': ' + response.data.message);
                 }
             } catch (error) {
                 // 在这里处理错误，显示错误信息
                 let errorMessage = error.response && error.response.data ? error.response.data.message : error.message;
-                alert(this.$t('message.loginFailed') + ': ' + errorMessage);
+                alert(this.$t('message.loginFailed2') + ': ' + errorMessage);
             }
         }
     }
