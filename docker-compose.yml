@@ -14,8 +14,6 @@ services:
     restart: always
     ports:
       - "5000:5000"
-    depends_on:
-      - redis
     environment:
       - ENV=${ENV}
       - start_time=${start_time}
