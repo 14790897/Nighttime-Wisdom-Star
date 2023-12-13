@@ -202,6 +202,7 @@ def call_api_with_retry(api_function, max_retries=5):
 
 if __name__ == "__main__":
     instant_reply = os.environ.get("ENV") == "development"
-    enable_wait_time = os.environ.get("ENABLE_WAIT_TIME", "False") == "True"
+    # enable_wait_time = os.environ.get("ENABLE_WAIT_TIME", "False") == "True"
+    enable_wait_time=False
     p = Process(target=process_loop, args=(instant_reply, enable_wait_time))
     p.start()
