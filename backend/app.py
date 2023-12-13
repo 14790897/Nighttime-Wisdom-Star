@@ -159,9 +159,11 @@ def history():
         username = session['username']
         result_key = f"{username}:results"
         history = r.lrange(result_key, 0, -1)[::-1]
-        if not history:
+        data_key = f"{username}:data"
+        question = r.lrange(data_key, 0, -1)[::-1]
+        if not question and not history:
             return jsonify(history=chat_history)
-        chat_history = get_chat_history(history,username)
+        chat_history = get_chat_history(history,question)
         return jsonify(history=chat_history)
     else:
         return jsonify(message="用户未登录"), 401  # 401 是未授权的 HTTP 状态码  , csrf_token=csrf._get_token()
@@ -171,10 +173,10 @@ def history():
 #     return jsonify(token=csrf._get_token())
 
 
-def get_chat_history(raw_data,username):
+def get_chat_history(raw_data,question):
     chat_history = []
-    data_key = f"{username}:data"
-    raw_data.extend(r.lrange(data_key, 0, -1)[::-1])
+    # data_key = f"{username}:data"
+    raw_data.extend(r.lrange(question, 0, -1)[::-1])
     for message in raw_data:
         split_message = message.split(',', 1)
         if len(split_message) > 1:
