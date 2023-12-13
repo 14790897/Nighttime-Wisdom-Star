@@ -176,7 +176,8 @@ def history():
 def get_chat_history(raw_data,question):
     chat_history = []
     # data_key = f"{username}:data"
-    raw_data.extend(r.lrange(question, 0, -1)[::-1])
+    question = ['input:' + item for item in question]
+    raw_data.extend(question[::-1])
     for message in raw_data:
         split_message = message.split(',', 1)
         if len(split_message) > 1:
