@@ -124,7 +124,6 @@ def login():
             "message": "Login failed. Check your username and password.",
         }, 401
 
-
 @app.route("/api/register", methods=["POST"])
 def register():
     data = request.get_json()
@@ -215,7 +214,7 @@ def get_chat_history(raw_data, question):
     chat_history = []
     # data_key = f"{username}:data"
     question = ["input:" + item for item in question]
-    raw_data.extend(question[::-1])
+    raw_data.extend(question)
     for message in raw_data:
         split_message = message.split(",", 1)
         if len(split_message) > 1:
