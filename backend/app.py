@@ -277,6 +277,8 @@ def available_chats():
 
 @app.route("/api/init_chat", methods=["GET"])
 def init_chat():
+    if  r.get("remain_counts") is None:
+        r.set("remain_counts", os.environ.get("amount"))
     return jsonify(
         start_time=os.environ.get("start_time"),
         end_time=os.environ.get("end_time"),
