@@ -34,7 +34,6 @@ services:
     volumes:
       - /mydata:/data
       - /redis.conf:/usr/local/etc/redis/redis.conf
-
     expose:
       - "6379"
     command: redis-server /usr/local/etc/redis/redis.conf

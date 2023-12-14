@@ -13,6 +13,11 @@
           <li class="nav-item">
             <router-link class="nav-link" to="/Register">Register</router-link>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/14790897/Nighttime-Wisdom-Star" target="_blank">
+              <i class="fab fa-github"></i> Please star my project
+            </a>
+          </li>
         </ul>
         <ul class="navbar-nav">
           <li class="nav-item dropdown">
