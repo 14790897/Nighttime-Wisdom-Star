@@ -7,7 +7,7 @@
 
 本项目旨在创建一个平台，让无法直接使用 GPT-4 的用户能够通过plus账号持有者的共享体验到 GPT-4 的强大功能。
 
-演示地址：[Registration and Login System --- 注册和登录系统](https://share.liuweiqing.top/)(plus账号被封，只剩网页壳子了)由于我可能会调试，所以有时无法访问。
+演示地址：https://share.liuweiqing.top/(可以看网页上面的允许使用时间来确定当前是否能立即负责响应)
 
 tg交流群：https://t.me/+tkxAZJNrwIpjYTk1
 
@@ -19,11 +19,12 @@ tg交流群：https://t.me/+tkxAZJNrwIpjYTk1
 
 ## 工作原理
 
-GPT-4 的免费使用额度限制为每三小时最多25条请求。由于账号持有者晚上需要休息，有大约75条的额度无法使用，因此我们可以在白天收集用户的问题，然后在晚上利用plus账号持有者闲置的GPT-4额度进行处理。用户提交的问题将被暂存到Redis数据库中，键名为"{username}:data"。项目中的进程会监听时间，当到达凌晨0点后，启动处理程序，读取用户提交的问题，处理后将结果连同原始问题一起存入Redis数据库，键名为"f"{username}:results"。这些数据将被长期保存，以便用户在后续访问主页时能看到与GPT-4的历史对话记录。
+GPT-4 的免费使用额度限制为每三小时最多40条请求。由于账号持有者晚上需要休息，有大约40*3条的额度无法使用，因此我们可以在白天收集用户的问题，然后在晚上利用plus账号持有者闲置的GPT-4额度进行处理。用户提交的问题将被暂存到Redis数据库中，键名为"{username}:data"。项目中的进程会监听时间，当到达凌晨0点后，启动处理程序，读取用户提交的问题，处理后将结果连同原始问题一起存入Redis数据库，键名为"f"{username}:results"。这些数据将被长期保存，以便用户在后续访问主页时能看到与GPT-4的历史对话记录。
 
-本项目如何与网页版ChatGPT进行交互？其实是用了[pengzhile/pandora: 潘多拉，一个让你呼吸顺畅的ChatGPT。Pandora, a ChatGPT that helps you breathe smoothly. (github.com)](https://github.com/pengzhile/pandora)
+本项目如何与网页版ChatGPT进行交互？其实是用了[pandora-next](https://github.com/pandora-next/deploy)
 
-## 使用方法（新版，方便）
+## 很抱歉由于pandora-next的升级导致下面的脚本不能使用,如果想用的人多的话我会修改下面的脚本
+## 使用方法
 
 欢迎使用 Nighttime Wisdom Star 应用。以下是如何在您的vps上安装和运行本应用的步骤。
 
