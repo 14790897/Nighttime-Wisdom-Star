@@ -23,41 +23,9 @@ GPT-4 的免费使用额度限制为每三小时最多40条请求。由于账号
 
 本项目如何与网页版ChatGPT进行交互？其实是用了[pandora-next](https://github.com/pandora-next/deploy)
 
-## 很抱歉由于pandora-next的升级导致下面的脚本不能使用,如果想用的人多的话我会修改下面的脚本
 ## 使用方法
 
-欢迎使用 Nighttime Wisdom Star 应用。以下是如何在您的vps上安装和运行本应用的步骤。
-
-### 运行 Nighttime Wisdom Star
-
-1. 进入vps的sudo模式
-
-2. Ubuntu下载并运行install_docker_and_compose_ubuntu.sh文件，
-
-   指令：
-
-   ```bash
-   wget https://raw.githubusercontent.com/14790897/Nighttime-Wisdom-Star/new-branch/install_docker_and_compose_ubuntu.sh
-   bash install_docker_and_compose_ubuntu.sh
-   ```
-
-   centos下载并运行install_docker_and_compose_centos.sh文件
-
-   指令：
-
-   ```bash
-   wget https://raw.githubusercontent.com/14790897/Nighttime-Wisdom-Star/new-branch/install_docker_and_compose_centos.sh
-   bash install_docker_and_compose_centos.sh
-   ```
-   系统会提示你输入相应环境变量，请按照提示操作。
-
-3. 等待 Docker Compose 拉取所需的镜像并启动服务，这可能需要一些时间，具体取决于你的网络速度和机器性能。
-
-4. 当所有服务都启动后，你就可以通过浏览器访问 [http://vps的IP:2345](http://vps的IP:2345) 来使用 Nighttime Wisdom Star 应用了。
-
-   ### 恭喜你，大功告成
-
-   接下来可以根据需求，进行nginx配置，可以使用域名访问（本教程就不教了），也可以IP:端口（端口是5000）直接访问。
+按照.env.template注释的要求更改文件然后运行目录下的new.sh脚本
 
 ## FQA
 
