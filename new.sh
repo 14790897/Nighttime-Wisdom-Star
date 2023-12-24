@@ -3,7 +3,7 @@ mv .env.template .env
 
 
 # 从.env文件中提取license_id
-LICENSE_ID=$(grep 'LICENSE_ID' .env | cut -d '"' -f 2)
+LICENSE_ID=$(grep 'LICENSE_ID' .env | cut -d "'" -f 2)
 
 # 检查LICENSE_ID是否被成功提取
 if [ -z "$LICENSE_ID" ]; then
