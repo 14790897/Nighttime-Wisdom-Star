@@ -25,7 +25,8 @@ GPT-4 的免费使用额度限制为每三小时最多40条请求。由于账号
 
 ## 使用方法
 
-按照.env.template注释的要求更改文件然后运行目录下的new.sh脚本
+1. 按照.env.template注释的要求更改文件
+2. 运行目录下的new.sh脚本, 代码：`source new.sh`
 
 ## FQA
 
