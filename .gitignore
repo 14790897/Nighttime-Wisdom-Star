@@ -28,4 +28,4 @@ frontend/*.sw?
 .env
 venv
 # example
-dump.rdb
+
