@@ -7,7 +7,7 @@
 
 本项目旨在创建一个平台，让无法直接使用 GPT-4 的用户能够通过plus账号持有者的共享体验到 GPT-4 的强大功能。
 
-# 目前已经取消Plus，使用perplexity的免费gpt4，所以下面的演示站只有3.5
+# 目前已经取消订阅Plus，使用perplexity的免费gpt4，所以下面的演示站只有3.5
 演示地址：https://share.liuweiqing.top/(可以看网页上面的允许使用时间来确定当前是否能立即负责响应)
 
 tg交流群：https://t.me/+tkxAZJNrwIpjYTk1
