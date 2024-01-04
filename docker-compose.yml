@@ -32,7 +32,7 @@ services:
   redis:
     image: redis:latest
     volumes:
-      - /mydata:/data
+      - /myredisdata:/var/lib/redis/dump.rdb
       - /redis.conf:/usr/local/etc/redis/redis.conf
     # expose:
     #   - "6379"
