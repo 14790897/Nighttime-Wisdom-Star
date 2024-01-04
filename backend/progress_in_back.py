@@ -141,7 +141,7 @@ def process_data_schedule(instant_reply, enable_wait_time):
                             "remain_counts": remaining_counts,
                         }
                         response = requests.post(
-                            "http://localhost:5000/api/receive_message", json=data
+                            "http://localhost:5001/api/receive_message", json=data
                         )
                         # 更新计数器
                         r.incr(counter_key)

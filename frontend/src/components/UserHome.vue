@@ -129,7 +129,7 @@
           return 0; 
       },
       startPolling() {
-      this.polling = setInterval(this.getAvailableChats, 5000); // 每5秒请求一次
+      this.polling = setInterval(this.getAvailableChats, 5001); // 每5秒请求一次
       },
       stopPolling() {
         clearInterval(this.polling);

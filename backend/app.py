@@ -289,4 +289,4 @@ def init_chat():
 if __name__ == "__main__":
     debug = os.environ.get("ENV") == "development"
     socketio.run(app, host="0.0.0.0", port=5001, debug=debug)
-    # app.run(host='0.0.0.0', port=5000, debug=debug)
+    # app.run(host='0.0.0.0', port=5001, debug=debug)
