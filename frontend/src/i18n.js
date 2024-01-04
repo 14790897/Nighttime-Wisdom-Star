@@ -10,6 +10,8 @@ const messages = {
       registerfailed:'Username already exists. Choose a different one.',
       registersuccess:'Registration successful, redirecting to the main page...',
       login_required:'You need to login first.',
+      loginFailed1: 'Login failed',
+      loginFailed2: 'Login failed'
     },
   },
   cn: {
@@ -21,6 +23,8 @@ const messages = {
         registerfailed:'用户名已存在，请选择其他用户名。',
         registersuccess:'注册成功，正在跳转到主页...',
         login_required:'请先登录。',
+        loginFailed1: '登陆失败',
+        loginFailed2: '登陆失败'
     },
   },
 }

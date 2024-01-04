@@ -1,0 +1,5 @@
+2024-01-04 21:14:13,379 - root - INFO - hello, logger, start logs
+2024-01-04 21:14:30,323 - root - INFO - Received username: 123
+2024-01-04 21:14:30,323 - root - INFO - Received password: 123
+2024-01-04 21:14:30,686 - root - INFO - split_message = ['input:你好']
+2024-01-04 21:14:30,687 - root - INFO - split_message = ['input:怎么回事']
