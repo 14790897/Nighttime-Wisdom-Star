@@ -13,7 +13,7 @@ services:
     image: 14790897/backend_nighttime-wisdom-star:latest
     restart: always
     ports:
-      - "5001:5000"
+      - "5001:5001"
     depends_on:
       - redis
     environment:

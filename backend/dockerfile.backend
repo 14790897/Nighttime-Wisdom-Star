@@ -17,7 +17,7 @@ RUN pip install --no-cache-dir -r requirements.txt && apt-get update && apt-get 
 ENV FLASK_APP=app.py
 
 # 对外暴露端口
-EXPOSE 5000
+EXPOSE 5001
 
 # 添加supervisor配置
 ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
