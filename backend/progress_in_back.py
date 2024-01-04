@@ -171,7 +171,7 @@ def process_data_schedule(instant_reply, enable_wait_time):
             and int(r.get(process_counter_key)) != 0
             and int(r.get(process_counter_key)) % 25 == 0
         ):
-            response = requests.get("http://localhost:5000/api/limit_warning")
+            response = requests.get("http://localhost:5001/api/limit_warning")
             if enable_wait_time:
                 if time_count < 180 * 60:
                     time.sleep(180 * 60 - time_count)
