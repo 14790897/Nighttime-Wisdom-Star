@@ -26,7 +26,7 @@ GPT-4 的免费使用额度限制为每三小时最多40条请求。由于账号
 
 1. 按照.env.template注释的要求更改文件
 2. 运行目录下的new.sh脚本, 代码：`source new.sh`
-3. 如需远程访问redis，运行 `bash redis_password.sh redis.conf` 需要设置的密码
+3. 运行 `bash redis_password.sh redis.conf` 设置redis的密码，这个不做的话，别人就可以清空你的数据库
 4. 目录下运行 `docker-compose up -d` 
 
 ## FQA
