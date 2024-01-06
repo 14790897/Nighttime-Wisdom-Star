@@ -7,12 +7,10 @@
 
 本项目旨在创建一个平台，让无法直接使用 GPT-4 的用户能够通过plus账号持有者的共享体验到 GPT-4 的强大功能。
 
-# 目前已经取消订阅Plus，使用perplexity的免费gpt4，所以下面的演示站只有3.5
+# 目前已经取消订阅Plus，我使用perplexity的免费gpt4，好像有方法也可以转换它的API但是我目前还没有学会，所以下面的演示站只有3.5
 演示地址：https://share.liuweiqing.top/(可以看网页上面的允许使用时间来确定当前是否能立即负责响应)
 
 tg交流群：https://t.me/+tkxAZJNrwIpjYTk1
-
-如果有需要的话，我会出一期视频详细讲解代码。
 
 界面展示：
 
@@ -28,7 +26,8 @@ GPT-4 的免费使用额度限制为每三小时最多40条请求。由于账号
 
 1. 按照.env.template注释的要求更改文件
 2. 运行目录下的new.sh脚本, 代码：`source new.sh`
-3. 如需远程访问redis，运行 bash redis_password.sh redis.conf 需要设置的密码
+3. 如需远程访问redis，运行 `bash redis_password.sh redis.conf` 需要设置的密码
+4. 目录下运行 `docker-compose up -d` 
 
 ## FQA
 
