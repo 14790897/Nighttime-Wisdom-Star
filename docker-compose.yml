@@ -35,7 +35,7 @@ services:
       - ./myredisdata:/data
       - ./redis.conf:/usr/local/etc/redis/redis.conf
     ports:
-      - "6379:6379"
+      - "6380:6379"
     command: redis-server /usr/local/etc/redis/redis.conf
 
 
